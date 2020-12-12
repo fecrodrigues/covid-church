@@ -6,7 +6,7 @@ import org.springframework.stereotype.Repository;
 import java.util.Date;
 
 @Repository
-@Document(collection = "Church")
+@Document(collection = "Pessoa")
 public class PessoaModel {
     private String cpf;
     private String nome;
