@@ -18,10 +18,11 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatCardModule } from '@angular/material/card';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { PageHeaderComponent } from './page-header/page-header.component';
 
 
 @NgModule({
-  declarations: [NavigationComponent],
+  declarations: [NavigationComponent, PageHeaderComponent],
   imports: [
     CommonModule,
     LayoutModule,
@@ -48,7 +49,8 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
     MatListModule,
     MatMenuModule,
     MatGridListModule,
-    MatTableModule
+    MatTableModule,
+    PageHeaderComponent
   ]
 })
 export class ComponentsModule { }
