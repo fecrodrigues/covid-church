@@ -1,13 +1,14 @@
 package br.com.fiap.api.dto;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import br.com.fiap.api.enums.PeriodicidadeEnum;
 import br.com.fiap.api.model.CultoModel;
 import br.com.fiap.api.model.ShortInfoInstituicaoModel;
 
-@JsonIgnoreProperties(ignoreUnknown = true)
+@JsonInclude(value = Include.NON_NULL)
 public class CultoDTO {
 
 	private String id;

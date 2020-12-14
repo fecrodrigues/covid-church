@@ -57,11 +57,11 @@ public class CultoController {
         ));
     }
     
-    @PutMapping
+    @PutMapping("/{id}")
     @ResponseStatus(code = HttpStatus.OK)
-    public CultoDTO update(@RequestBody CultoDTO dto) {
+    public CultoDTO update(@PathVariable String id, @RequestBody CultoDTO dto) {
         return new CultoDTO(
-        		service.update(new CultoModel(dto))
+        		service.update(id,new CultoModel(dto))
         );
     }
     

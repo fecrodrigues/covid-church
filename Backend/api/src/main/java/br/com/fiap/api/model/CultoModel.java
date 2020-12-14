@@ -23,7 +23,7 @@ public class CultoModel {
 	public CultoModel() {}
 	
 	public CultoModel(CultoDTO dto) {
-		this.id = new ObjectId(dto.getId());
+		this.id = dto.getId() == null ? null : new ObjectId(dto.getId());
 		
 		ShortInfoInstituicaoDTO shortDTO = dto.getshortInfoInstituicaoDTO();
 		this.shortInfoInstituicaoModel = shortDTO == null ? null :new ShortInfoInstituicaoModel(shortDTO);
