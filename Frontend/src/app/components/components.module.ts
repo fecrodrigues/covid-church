@@ -10,6 +10,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatListModule } from '@angular/material/list';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatTableModule } from '@angular/material/table';
+import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatGridListModule} from '@angular/material/grid-list';
 
 import { NavigationComponent } from './navigation/navigation.component';
@@ -50,7 +51,8 @@ import { PageHeaderComponent } from './page-header/page-header.component';
     MatMenuModule,
     MatGridListModule,
     MatTableModule,
-    PageHeaderComponent
+    PageHeaderComponent,
+    MatPaginatorModule
   ]
 })
 export class ComponentsModule { }
