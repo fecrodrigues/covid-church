@@ -9,6 +9,8 @@ import java.util.List;
 @Repository
 public interface PessoaRepository extends MongoRepository<PessoaModel,String> {
 
+    PessoaModel save(PessoaModel pessoaModel);
     List<PessoaModel> findAll();
-    List<PessoaModel> findByCpf(String cpf);
+    PessoaModel findByCpf(String cpf);
+//    PessoaModel updateByCpf(String cpf);
 }
