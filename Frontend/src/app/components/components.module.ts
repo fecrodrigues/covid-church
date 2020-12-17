@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { CommonModule, registerLocaleData } from '@angular/common';
 import { LayoutModule } from '@angular/cdk/layout';
 import { AppRoutingModule } from './../app-routing.module';
 
@@ -12,6 +12,7 @@ import { MatMenuModule } from '@angular/material/menu';
 import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatGridListModule} from '@angular/material/grid-list';
+import { MatDialogModule } from '@angular/material/dialog';
 
 import { NavigationComponent } from './navigation/navigation.component';
 
@@ -20,10 +21,22 @@ import { MatInputModule } from '@angular/material/input';
 import { MatCardModule } from '@angular/material/card';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { PageHeaderComponent } from './page-header/page-header.component';
+import { SchedulingModalComponent } from './scheduling-modal/scheduling-modal.component';
 
+import { CalendarModule, DateAdapter } from 'angular-calendar';
+import { adapterFactory } from 'angular-calendar/date-adapters/moment';
+import * as moment from 'moment';
+
+import localePtBR from '@angular/common/locales/pt';
+
+export function momentAdapterFactory() {
+  return adapterFactory(moment);
+};
+
+registerLocaleData(localePtBR);
 
 @NgModule({
-  declarations: [NavigationComponent, PageHeaderComponent],
+  declarations: [NavigationComponent, PageHeaderComponent, SchedulingModalComponent],
   imports: [
     CommonModule,
     LayoutModule,
@@ -36,7 +49,11 @@ import { PageHeaderComponent } from './page-header/page-header.component';
     FontAwesomeModule,
     MatGridListModule,
     MatTableModule,
-    AppRoutingModule
+    AppRoutingModule,
+    MatDialogModule,
+    MatPaginatorModule,
+    MatCardModule,
+    CalendarModule.forRoot({ provide: DateAdapter, useFactory: momentAdapterFactory })
   ],
   exports: [
     NavigationComponent,
@@ -52,7 +69,8 @@ import { PageHeaderComponent } from './page-header/page-header.component';
     MatGridListModule,
     MatTableModule,
     PageHeaderComponent,
-    MatPaginatorModule
+    MatPaginatorModule,
+    MatDialogModule
   ]
 })
 export class ComponentsModule { }

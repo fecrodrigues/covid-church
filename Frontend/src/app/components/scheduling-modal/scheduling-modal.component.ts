@@ -1,24 +1,50 @@
-import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Inject, OnInit, ViewChild } from '@angular/core';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 
-@Component({
-  selector: 'app-mculto',
-  templateUrl: './mculto.component.html',
-  styleUrls: ['./mculto.component.sass']
-})
+import { ApiCallerService } from './../../services/api-caller.service';
 
-export class McultoComponent implements AfterViewInit {
-  
-  displayedColumns: string[] = ['position', 'name', 'weight', 'symbol', 'buttons'];
-  dataSource = new MatTableDataSource<any>(ELEMENT_DATA);
+@Component({
+  selector: 'app-scheduling-modal',
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  templateUrl: './scheduling-modal.component.html',
+  styleUrls: ['./scheduling-modal.component.sass']
+})
+export class SchedulingModalComponent implements OnInit {
+
+  selectedRowIndex: Number | undefined;
+
+  displayedColumns: string[] = ['descricao', 'data', 'duracao', 'capacidade', 'buttons'];
+  dataSourceCult: MatTableDataSource<any> = new MatTableDataSource<any>();
 
   @ViewChild(MatPaginator) paginator: MatPaginator | undefined;
 
   ngAfterViewInit() {
-    this.dataSource.paginator = this.paginator? this.paginator: null;
+    this.dataSourceCult.paginator = this.paginator? this.paginator: null;
+  }
+
+  constructor(
+    public dialogRef: MatDialogRef<SchedulingModalComponent>, 
+    private apiCaller: ApiCallerService,
+    @Inject(MAT_DIALOG_DATA) public data: any) {}
+
+  ngOnInit(): void {
+    this.apiCaller.carregarListadeCultosPorInstituicao(this.data.id).subscribe(response => {
+      console.log(response, 'response')
+      this.dataSourceCult.data = response.cultos;
+    })
+
+  }
+
+  scheduleItem(row: any) {
+    console.log(row, 'row')
   }
   
+  onNoClick(): void {
+    this.dialogRef.close();
+  }
+
 }
 
 export interface PeriodicElement {
@@ -50,4 +76,3 @@ const ELEMENT_DATA: PeriodicElement[] = [
   {position: 19, name: 'Potassium', weight: 39.0983, symbol: 'K'},
   {position: 20, name: 'Calcium', weight: 40.078, symbol: 'Ca'},
 ];
-

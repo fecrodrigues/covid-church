@@ -6,6 +6,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ReactiveFormsModule } from '@angular/forms';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { ContentLoaderModule } from '@ngneat/content-loader';
+import { HttpClientModule } from '@angular/common/http';
 
 import { AppComponent } from './app.component';
 import { LoginComponent } from './pages/login/login.component';
@@ -18,6 +19,13 @@ import { ProfileComponent } from './pages/user_pages/profile/profile.component';
 import { AgendamentoComponent } from './pages/user_pages/agendamento/agendamento.component';
 import { MinstituicaoComponent } from './pages/user_pages/minstituicao/minstituicao.component';
 import { McultoComponent } from './pages/user_pages/mculto/mculto.component';
+import { CalendarModule, DateAdapter } from 'angular-calendar';
+import { adapterFactory } from 'angular-calendar/date-adapters/moment';
+import * as moment from 'moment';
+
+export function momentAdapterFactory() {
+  return adapterFactory(moment);
+};
 
 @NgModule({
   declarations: [
@@ -40,7 +48,9 @@ import { McultoComponent } from './pages/user_pages/mculto/mculto.component';
     ReactiveFormsModule,
     FontAwesomeModule,
     FlexLayoutModule,
-    ContentLoaderModule
+    ContentLoaderModule,
+    HttpClientModule,
+    CalendarModule.forRoot({ provide: DateAdapter, useFactory: momentAdapterFactory })
   ],
   providers: [],
   bootstrap: [AppComponent]
