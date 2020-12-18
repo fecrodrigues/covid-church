@@ -40,6 +40,10 @@ export class SchedulingModalComponent implements OnInit {
   scheduleItem(row: any) {
     console.log(row, 'row')
   }
+
+  scheduleCancel() {
+    
+  }
   
   onNoClick(): void {
     this.dialogRef.close();
