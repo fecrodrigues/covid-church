@@ -1,5 +1,9 @@
 package br.com.fiap.api.model;
 
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
+
 import org.bson.types.ObjectId;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.stereotype.Repository;
@@ -15,17 +19,18 @@ public class CultoModel {
 	private ObjectId id;
 	private ShortInfoInstituicaoModel shortInfoInstituicaoModel;
 	private String descricao;
-	private Long data;
+	private LocalDate data;
 	private Integer duracao;
 	private Integer capacidade;
 	private PeriodicidadeEnum periodicidade;
+	private List<ShortInfoPessoaModel> listShortInfoPessoaModel;
 	
 	public CultoModel() {}
 	
 	public CultoModel(CultoDTO dto) {
 		this.id = dto.getId() == null ? null : new ObjectId(dto.getId());
 		
-		ShortInfoInstituicaoDTO shortDTO = dto.getshortInfoInstituicaoDTO();
+		ShortInfoInstituicaoDTO shortDTO = dto.getShortInfoInstituicaoDTO();
 		this.shortInfoInstituicaoModel = shortDTO == null ? null :new ShortInfoInstituicaoModel(shortDTO);
 		
 		this.descricao = dto.getDescricao();
@@ -33,6 +38,10 @@ public class CultoModel {
 		this.duracao = dto.getDuracao();
 		this.capacidade = dto.getCapacidade();
 		this.periodicidade = dto.getPeriodicidade();
+		
+		List<ShortInfoPessoaModel> pessoasModel = new ArrayList<>();
+		dto.getListShortInfoPessoaDTO().forEach(pessoaDTO -> pessoasModel.add(new ShortInfoPessoaModel(pessoaDTO)));
+		this.listShortInfoPessoaModel = pessoasModel;
 	}
 	
 	public ObjectId getId() {
@@ -43,10 +52,10 @@ public class CultoModel {
 	}
 
 	
-	public ShortInfoInstituicaoModel getShortInfoInstituicao() {
+	public ShortInfoInstituicaoModel getShortInfoInstituicaoModel() {
 		return shortInfoInstituicaoModel;
 	}
-	public void setShortInfoInstituicao(ShortInfoInstituicaoModel shortInfoInstituicao) {
+	public void setShortInfoInstituicaoModel(ShortInfoInstituicaoModel shortInfoInstituicao) {
 		this.shortInfoInstituicaoModel = shortInfoInstituicao;
 	}
 
@@ -59,10 +68,10 @@ public class CultoModel {
 	}
 	
 
-	public Long getData() {
+	public LocalDate getData() {
 		return data;
 	}
-	public void setData(Long data) {
+	public void setData(LocalDate data) {
 		this.data = data;
 	}
 
@@ -88,5 +97,13 @@ public class CultoModel {
 	}
 	public void setPeriodicidade(PeriodicidadeEnum periodicidade) {
 		this.periodicidade = periodicidade;
+	}
+
+	
+	public List<ShortInfoPessoaModel> getListShortInfoPessoaModel() {
+		return listShortInfoPessoaModel;
+	}
+	public void setListShortInfoPessoaModel(List<ShortInfoPessoaModel> listShortInfoPessoaModel) {
+		this.listShortInfoPessoaModel = listShortInfoPessoaModel;
 	}
 }

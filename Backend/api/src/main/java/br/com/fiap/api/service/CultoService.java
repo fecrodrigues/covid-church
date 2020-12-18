@@ -8,7 +8,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
+import br.com.fiap.api.dto.ShortInfoPessoaDTO;
 import br.com.fiap.api.model.CultoModel;
+import br.com.fiap.api.model.ShortInfoPessoaModel;
 import br.com.fiap.api.repository.CultoRepository;
 
 @Service
@@ -39,6 +41,15 @@ public class CultoService {
         return repository.save(model);
     }
     
+    public List<ShortInfoPessoaModel> addPessoa(String idCulto, List<ShortInfoPessoaModel> models) {
+    	CultoModel culto = findById(idCulto);
+    	
+    	culto.getListShortInfoPessoaModel().addAll(models);
+    	
+        return repository.save(culto)
+        		.getListShortInfoPessoaModel();
+    }    
+    
     public CultoModel update(String id, CultoModel newModel) {
     	CultoModel oldModel = findById(id);
     	
@@ -46,8 +57,9 @@ public class CultoService {
     		throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Culto não encontrado");
     	}
     	
-    	oldModel.setShortInfoInstituicao(newModel.getShortInfoInstituicao());
+    	oldModel.setShortInfoInstituicaoModel(newModel.getShortInfoInstituicaoModel());
     	oldModel.setDescricao(newModel.getDescricao());
+    	oldModel.setData(newModel.getData());
     	oldModel.setDuracao(newModel.getDuracao());
     	oldModel.setCapacidade(newModel.getCapacidade());
     	oldModel.setPeriodicidade(newModel.getPeriodicidade());
@@ -57,5 +69,11 @@ public class CultoService {
     
     public void remove(String id) {
         repository.deleteById(new ObjectId(id));
+    }
+    
+    public void removePessoa(String idCulto, ShortInfoPessoaModel shortPessoa) {
+    	CultoModel culto = findById(idCulto);
+    	culto.getListShortInfoPessoaModel()
+    		.remove(shortPessoa);
     }
 }

@@ -1,35 +1,63 @@
 package br.com.fiap.api.controller;
 
-import br.com.fiap.api.model.AgendamentoModel;
-import br.com.fiap.api.repository.AgendamentoRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
-
+import java.util.ArrayList;
 import java.util.List;
 
+import org.bson.types.ObjectId;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.bind.annotation.RestController;
+
+import br.com.fiap.api.dto.CultoDTO;
+import br.com.fiap.api.dto.ShortInfoPessoaDTO;
+import br.com.fiap.api.model.CultoModel;
+import br.com.fiap.api.model.ShortInfoPessoaModel;
+import br.com.fiap.api.service.CultoService;
+
 @RestController
+@RequestMapping("/cultos/{id}/pessoas")
 public class AgendamentoController {
-    @Autowired
-    private AgendamentoModel agendamentoModel;
 
-    @Autowired
-    private AgendamentoRepository agendamentoRepository;
-
-    @PostMapping("/agendamento")
-    public ResponseEntity<AgendamentoModel> addAgendamento(@RequestBody AgendamentoModel agendamento){
-        agendamentoModel = agendamentoRepository.save(agendamento);
-        if (agendamentoModel != null)
-            return ResponseEntity.status(HttpStatus.CREATED).body(agendamentoModel);
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+    private final CultoService cultoService;
+    
+    public AgendamentoController(CultoService cultoService) {
+    	this.cultoService = cultoService;
     }
-
-    @GetMapping("/agendamentos")
-    public List<AgendamentoModel> getAgendamentos(){return agendamentoRepository.findAll();}
-
-    //@GetMapping("/agendamento/{id}")
+    
+    @GetMapping
+    @ResponseStatus(code = HttpStatus.OK)
+    public List<ShortInfoPessoaDTO> findAll(@PathVariable String id) {
+    	List<ShortInfoPessoaDTO> pessoas = new ArrayList<>(); 
+    	
+    	cultoService.findById(id).getListShortInfoPessoaModel()
+    		.forEach(shortModel -> pessoas.add(new ShortInfoPessoaDTO(shortModel)));
+    	
+        return pessoas;
+    }
+    
+    
+    @PostMapping
+    @ResponseStatus(code = HttpStatus.CREATED)
+    public List<ShortInfoPessoaDTO> add(@PathVariable String id, @RequestBody List<ShortInfoPessoaDTO> listDto) {
+    	
+    	List<ShortInfoPessoaModel> pessoas = new ArrayList<>();
+    	listDto.forEach(dto -> new ShortInfoPessoaModel(dto));
+    	
+        return new CultoDTO(
+        		);
+    }
+    
+    @DeleteMapping("/{id}")
+    @ResponseStatus(code = HttpStatus.NO_CONTENT)
+    public void remove(@PathVariable String id) {
+        cultoService.remove(id);
+    }
+	
 }

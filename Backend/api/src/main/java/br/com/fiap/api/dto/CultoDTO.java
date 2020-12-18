@@ -1,5 +1,9 @@
 package br.com.fiap.api.dto;
 
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
+
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -14,17 +18,18 @@ public class CultoDTO {
 	private String id;
 	private ShortInfoInstituicaoDTO shortInfoInstituicaoDTO;
 	private String descricao;
-	private Long data;
+	private LocalDate data;
 	private Integer duracao;
 	private Integer capacidade;
 	private PeriodicidadeEnum periodicidade;
+	private List<ShortInfoPessoaDTO> listShortInfoPessoaDTO;
 
 	public CultoDTO() {}
 	
 	public CultoDTO(CultoModel model) {
 		this.id = model.getId().toString();
 		
-		ShortInfoInstituicaoModel shortModel = model.getShortInfoInstituicao();
+		ShortInfoInstituicaoModel shortModel = model.getShortInfoInstituicaoModel();
 		this.shortInfoInstituicaoDTO = shortModel == null ? null :new ShortInfoInstituicaoDTO(shortModel);
 		
 		this.descricao = model.getDescricao();
@@ -32,6 +37,10 @@ public class CultoDTO {
 		this.duracao = model.getDuracao();
 		this.capacidade = model.getCapacidade();
 		this.periodicidade = model.getPeriodicidade();
+		
+		List<ShortInfoPessoaDTO> pessoasDTO = new ArrayList<>();
+		model.getListShortInfoPessoaModel().forEach(pessoaModel -> pessoasDTO.add(new ShortInfoPessoaDTO(pessoaModel)));
+		this.listShortInfoPessoaDTO = pessoasDTO;
 	}
 	
 	public String getId() {
@@ -42,11 +51,11 @@ public class CultoDTO {
 	}
 
 	@JsonProperty("instituicao")
-	public ShortInfoInstituicaoDTO getshortInfoInstituicaoDTO() {
+	public ShortInfoInstituicaoDTO getShortInfoInstituicaoDTO() {
 		return shortInfoInstituicaoDTO;
 	}
 	@JsonProperty("instituicao")
-	public void setshortInfoInstituicaoDTO(ShortInfoInstituicaoDTO instituicao) {
+	public void setShortInfoInstituicaoDTO(ShortInfoInstituicaoDTO instituicao) {
 		this.shortInfoInstituicaoDTO = instituicao;
 	}
 
@@ -59,10 +68,10 @@ public class CultoDTO {
 	}
 	
 
-	public Long getData() {
+	public LocalDate getData() {
 		return data;
 	}
-	public void setData(Long data) {
+	public void setData(LocalDate data) {
 		this.data = data;
 	}
 
@@ -88,6 +97,16 @@ public class CultoDTO {
 	}
 	public void setPeriodicidade(PeriodicidadeEnum periodicidade) {
 		this.periodicidade = periodicidade;
+	}
+
+	
+	@JsonProperty("pessoas")
+	public List<ShortInfoPessoaDTO> getListShortInfoPessoaDTO() {
+		return listShortInfoPessoaDTO;
+	}
+	@JsonProperty("pessoas")
+	public void setListShortInfoPessoaDTO(List<ShortInfoPessoaDTO> listShortInfoPessoaDTO) {
+		this.listShortInfoPessoaDTO = listShortInfoPessoaDTO;
 	}
 	
 }
