@@ -3,7 +3,7 @@ import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { Observable } from 'rxjs';
 import { map, shareReplay } from 'rxjs/operators';
 
-import { faUserCircle, faSignOutAlt, faCalendarDay, faChurch, faUser, faUsers, faBars } from '@fortawesome/free-solid-svg-icons';
+import { faUserCircle, faSignOutAlt, faCalendarDay, faChurch, faUser, faUsers, faBars, faCalendarAlt } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-navigation',
@@ -19,6 +19,7 @@ export class NavigationComponent {
   faUser = faUser;
   faUsers = faUsers;
   faBars = faBars;
+  faCalendarAlt = faCalendarAlt;
 
   isAuthenticated: Boolean = true;
 

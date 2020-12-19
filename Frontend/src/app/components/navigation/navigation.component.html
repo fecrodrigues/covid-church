@@ -1,15 +1,15 @@
 
 <mat-sidenav-container class="sidenav-container" [hasBackdrop]="false">
 
-  <mat-sidenav #drawer class="sidenav" opened [fixedInViewport]="true" [fixedTopGap]="63" [fixedBottomGap]="0">
+  <mat-sidenav #drawer mode="over" class="sidenav" opened [fixedInViewport]="true" [fixedTopGap]="64" [fixedBottomGap]="0">
     <mat-toolbar><fa-icon [icon]="faBars" size="sm"></fa-icon> &nbsp; Menu</mat-toolbar>
     <mat-nav-list>
-      <a mat-list-item href="#"><fa-icon [icon]="faChurch" size="sm"></fa-icon> &nbsp; Instituições</a>
-      <a mat-list-item href="#"><fa-icon [icon]="faUsers" size="sm"></fa-icon> &nbsp; Cultos</a>
+      <a mat-list-item routerLink="instituicoes"><fa-icon [icon]="faCalendarAlt" size="sm"></fa-icon> &nbsp; Agendamento</a>
+      <!--<a mat-list-item routerLink="cultos"><fa-icon [icon]="faUsers" size="sm"></fa-icon> &nbsp; Cultos</a>-->
     </mat-nav-list>
   </mat-sidenav>
   
-  <mat-sidenav-content >
+  <mat-sidenav-content>
     <mat-toolbar color="primary" class="fixed-toolbar">
       <button
         type="button"
@@ -26,22 +26,22 @@
       <button class="toolbar-button" mat-button [matMenuTriggerFor]="menu"><fa-icon [icon]="faUserCircle" size="lg"></fa-icon></button>
 
       <mat-menu #menu="matMenu">
-        <button mat-menu-item>
+        <a mat-menu-item routerLink="perfil">
           <mat-icon><fa-icon [icon]="faUser" size="sm"></fa-icon></mat-icon>
           <span>Perfil</span>
-        </button>
-        <button mat-menu-item>
+        </a>
+        <a mat-menu-item routerLink="minhas-instituicoes">
           <mat-icon><fa-icon [icon]="faChurch" size="sm"></fa-icon></mat-icon>
           <span>Minhas Instituições</span>
-        </button>
-        <button mat-menu-item>
+        </a>
+        <a mat-menu-item routerLink="meus-cultos">
           <mat-icon><fa-icon [icon]="faUsers" size="sm"></fa-icon></mat-icon>
           <span>Meus Cultos</span>
-        </button>
-        <button mat-menu-item>
+        </a>
+        <a mat-menu-item routerLink="agendamentos">
           <mat-icon><fa-icon [icon]="faCalendarDay" size="sm"></fa-icon></mat-icon>
           <span>Meus Agendamentos</span>
-        </button>
+        </a>
        
       </mat-menu>
 
@@ -49,8 +49,7 @@
     </mat-toolbar>
     <!-- Add Content Here -->
     
-    <div [ngClass]="{'content': drawer.opened, 'content-not-menu ': !drawer.opened}">
-      {{drawer.opened}}
+    <div class="mat-elevation-z1" [ngClass]="{'content': drawer.opened, 'content-not-menu': !drawer.opened}">
       <ng-content></ng-content>
     </div>
 
