@@ -1,9 +1,13 @@
 package br.com.fiap.api.model;
 
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.stereotype.Repository;
 
-import java.util.Date;
+import br.com.fiap.api.dto.PessoaDTO;
+import br.com.fiap.api.enums.FaixaEtariaEnum;
 
 @Repository
 @Document(collection = "Pessoa")
@@ -11,58 +15,80 @@ public class PessoaModel {
     private String cpf;
     private String nome;
     private String sobrenome;
-    private Date dataNascimento;
-    private Integer faixaEtaria;
+    private LocalDate dataNascimento;
+    private FaixaEtariaEnum faixaEtaria;
+    private List<ShortInfoCultoModel> listShortInfoCultoModel;
 
-    public PessoaModel(String cpf, String nome, String sobrenome, Date dataNascimento, Integer faixaEtaria) {
-        this.cpf = cpf;
-        this.nome = nome;
-        this.sobrenome = sobrenome;
-        this.dataNascimento = dataNascimento;
-        this.faixaEtaria = faixaEtaria;
+    
+    public PessoaModel() {}
+    
+    public PessoaModel(PessoaDTO dto) {
+        this.cpf = dto.getCpf();
+        this.nome = dto.getNome();
+        this.sobrenome = dto.getSobrenome();
+        this.dataNascimento = dto.getDataNascimento();
+        this.faixaEtaria = dto.getFaixaEtaria();
+        
+		List<ShortInfoCultoModel> cultosModel = new ArrayList<>();
+		
+		if(dto.getListShortInfoCultoDTO() != null && dto.getListShortInfoCultoDTO().isEmpty()) {
+			dto.getListShortInfoCultoDTO()
+				.forEach(cultoDTO -> cultosModel.add(new ShortInfoCultoModel(cultoDTO)));
+			
+			this.listShortInfoCultoModel = cultosModel;
+		}else {
+			this.listShortInfoCultoModel = null;
+		}
+        
     }
 
-    public PessoaModel() {
-
-    }
+    
 
     public String getCpf() {
         return cpf;
     }
-
     public void setCpf(String cpf) {
         this.cpf = cpf;
     }
 
+    
     public String getNome() {
         return nome;
     }
-
     public void setNome(String nome) {
         this.nome = nome;
     }
 
+    
     public String getSobrenome() {
         return sobrenome;
     }
-
     public void setSobrenome(String sobrenome) {
         this.sobrenome = sobrenome;
     }
 
-    public Date getDataNascimento() {
+    
+    public LocalDate getDataNascimento() {
         return dataNascimento;
     }
-
-    public void setDataNascimento(Date dataNascimento) {
+    public void setDataNascimento(LocalDate dataNascimento) {
         this.dataNascimento = dataNascimento;
     }
 
-    public Integer getFaixaEtaria() {
+    
+    public FaixaEtariaEnum getFaixaEtaria() {
         return faixaEtaria;
     }
-
-    public void setFaixaEtaria(Integer faixaEtaria) {
+    public void setFaixaEtaria(FaixaEtariaEnum faixaEtaria) {
         this.faixaEtaria = faixaEtaria;
     }
+
+    
+	public List<ShortInfoCultoModel> getListShortInfoCultoModel() {
+		return listShortInfoCultoModel;
+	}
+	public void setListShortInfoCultoModel(List<ShortInfoCultoModel> listShortInfoCultoModel) {
+		this.listShortInfoCultoModel = listShortInfoCultoModel;
+	}
+	
 }

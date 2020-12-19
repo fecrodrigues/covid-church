@@ -1,48 +1,74 @@
 package br.com.fiap.api.controller;
 
-import br.com.fiap.api.model.PessoaModel;
-import br.com.fiap.api.repository.PessoaRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
-
-import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
+import org.bson.types.ObjectId;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.bind.annotation.RestController;
+
+import br.com.fiap.api.dto.CultoDTO;
+import br.com.fiap.api.dto.PessoaDTO;
+import br.com.fiap.api.model.CultoModel;
+import br.com.fiap.api.service.PessoaService;
+
 @RestController
+@RequestMapping("/pessoas")
 public class PessoaController {
 
-    @Autowired
-    private PessoaModel pessoaModel;
+    private final PessoaService service;
 
-    @Autowired
-    private PessoaRepository pessoaRepository;
-
-    @RequestMapping(value = "/")
-    public void redirect(HttpServletResponse response) throws IOException {
-        response.sendRedirect("/swagger-ui.html");
+    public PessoaController(PessoaService service) {
+		this.service = service;
+	}
+    
+    @GetMapping
+    @ResponseStatus(code = HttpStatus.OK)
+    public List<PessoaDTO> findAll() {
+    	List<PessoaDTO> pessoas = new ArrayList<>(); 
+    	
+    	service.findAll().forEach(model -> pessoas.add(new PessoaDTO(model)));
+    	
+        return pessoas;
     }
-
-    @PostMapping("/pessoa")
-    public ResponseEntity<PessoaModel> addPessoa(@RequestBody PessoaModel pessoa) {
-        pessoaModel = pessoaRepository.save(pessoa);
-        if (pessoaModel != null)
-            return ResponseEntity.status(HttpStatus.CREATED).body(pessoaModel);
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+    
+    @GetMapping("/{id}")
+    @ResponseStatus(code = HttpStatus.OK)
+    public PessoaDTO findById(@PathVariable String id) {
+        return new PessoaDTO(
+        		service.findById(id)
+        );
     }
-
-    @GetMapping("/pessoas")
-    public List<PessoaModel> getPessoas(){ return pessoaRepository.findAll(); }
-
-    @GetMapping("/pessoa/{cpf}")
-    public ResponseEntity<PessoaModel> getByCpf(@PathVariable String cpf) {
-        pessoaModel = (PessoaModel) pessoaRepository.findByCpf(cpf);
-        if (pessoaModel == null)
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
-        return ResponseEntity.ok(pessoaModel);
+    
+    @PostMapping
+    @ResponseStatus(code = HttpStatus.CREATED)
+    public PessoaDTO add(@RequestBody CultoDTO dto) {
+    	dto.setId(new ObjectId().toHexString());
+    	
+        return new PessoaDTO(
+        		service.add(new PessoaModel(dto)
+        ));
     }
-/*    @PutMapping("/pessoa")
-    public PessoaModel putPessoa(@RequestBody PessoaModel pessoaModel) {return pessoaRepository.updateByCpf(pessoaModel.getCpf());}*/
+    
+    @PutMapping("/{id}")
+    @ResponseStatus(code = HttpStatus.OK)
+    public CultoDTO update(@PathVariable String id, @RequestBody CultoDTO dto) {
+        return new CultoDTO(
+        		service.update(id,new CultoModel(dto))
+        );
+    }
+    
+    @DeleteMapping("/{id}")
+    @ResponseStatus(code = HttpStatus.NO_CONTENT)
+    public void remove(@PathVariable String id) {
+        service.remove(id);
+    }
 }
