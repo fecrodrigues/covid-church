@@ -40,8 +40,16 @@ public class CultoModel {
 		this.periodicidade = dto.getPeriodicidade();
 		
 		List<ShortInfoPessoaModel> pessoasModel = new ArrayList<>();
-		dto.getListShortInfoPessoaDTO().forEach(pessoaDTO -> pessoasModel.add(new ShortInfoPessoaModel(pessoaDTO)));
-		this.listShortInfoPessoaModel = pessoasModel;
+		
+		if(dto.getListShortInfoPessoaDTO() != null && dto.getListShortInfoPessoaDTO().isEmpty()) {
+			dto.getListShortInfoPessoaDTO()
+				.forEach(pessoaDTO -> pessoasModel.add(new ShortInfoPessoaModel(pessoaDTO)));
+			
+			this.listShortInfoPessoaModel = pessoasModel;
+		}else {
+			this.listShortInfoPessoaModel = null;
+		}
+		
 	}
 	
 	public ObjectId getId() {

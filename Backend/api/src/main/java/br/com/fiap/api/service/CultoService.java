@@ -8,7 +8,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
-import br.com.fiap.api.dto.ShortInfoPessoaDTO;
 import br.com.fiap.api.model.CultoModel;
 import br.com.fiap.api.model.ShortInfoPessoaModel;
 import br.com.fiap.api.repository.CultoRepository;
@@ -44,7 +43,11 @@ public class CultoService {
     public List<ShortInfoPessoaModel> addPessoa(String idCulto, List<ShortInfoPessoaModel> models) {
     	CultoModel culto = findById(idCulto);
     	
-    	culto.getListShortInfoPessoaModel().addAll(models);
+    	if(culto.getListShortInfoPessoaModel() != null ) {
+    		culto.getListShortInfoPessoaModel().addAll(models);
+    	}else {
+    		culto.setListShortInfoPessoaModel(models);
+    	}
     	
         return repository.save(culto)
         		.getListShortInfoPessoaModel();
