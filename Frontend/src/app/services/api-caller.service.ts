@@ -19,5 +19,9 @@ export class ApiCallerService {
     return this.httpClient.get("assets/jsonExamples.json");
   }
 
+  carregarListadeAgendamentosPorUsuario(cpf: String): Observable<any> {
+    console.log(cpf, 'cpf')
+    return this.httpClient.get("assets/jsonExamples.json");
+  }
 
 }
