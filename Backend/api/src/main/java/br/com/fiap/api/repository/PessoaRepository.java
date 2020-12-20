@@ -7,5 +7,4 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface PessoaRepository extends MongoRepository<PessoaModel,String> {
 
-    PessoaModel findByCpf(String cpf);
 }

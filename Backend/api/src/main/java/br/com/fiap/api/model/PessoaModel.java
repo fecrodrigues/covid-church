@@ -3,11 +3,9 @@ package br.com.fiap.api.model;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.stereotype.Repository;
-
 import br.com.fiap.api.dto.PessoaDTO;
 import br.com.fiap.api.enums.FaixaEtariaEnum;
 
@@ -47,7 +45,6 @@ public class PessoaModel {
     }
 
     
-
     public String getCpf() {
         return cpf;
     }
