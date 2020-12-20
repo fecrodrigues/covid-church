@@ -7,6 +7,8 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { ContentLoaderModule } from '@ngneat/content-loader';
 import { HttpClientModule } from '@angular/common/http';
+import { NgxMaskModule } from 'ngx-mask'
+import { JwtModule } from '@auth0/angular-jwt';
 
 import { AppComponent } from './app.component';
 import { LoginComponent } from './pages/login/login.component';
@@ -22,10 +24,17 @@ import { McultoComponent } from './pages/user_pages/mculto/mculto.component';
 import { CalendarModule, DateAdapter } from 'angular-calendar';
 import { adapterFactory } from 'angular-calendar/date-adapters/moment';
 import * as moment from 'moment';
+import { EditCultoModalComponent } from './pages/user_pages/mculto/edit-culto-modal/edit-culto-modal.component';
+import { EditInstituicaoModalComponent } from './pages/user_pages/minstituicao/edit-instituicao-modal/edit-instituicao-modal.component';
+import { CadastroComponent } from './pages/cadastro/cadastro.component';
 
 export function momentAdapterFactory() {
   return adapterFactory(moment);
 };
+
+export function tokenGetter() {
+  return localStorage.getItem("token");
+}
 
 @NgModule({
   declarations: [
@@ -39,6 +48,9 @@ export function momentAdapterFactory() {
     AgendamentoComponent,
     MinstituicaoComponent,
     McultoComponent,
+    EditCultoModalComponent,
+    EditInstituicaoModalComponent,
+    CadastroComponent,
   ],
   imports: [
     BrowserModule,
@@ -50,7 +62,15 @@ export function momentAdapterFactory() {
     FlexLayoutModule,
     ContentLoaderModule,
     HttpClientModule,
-    CalendarModule.forRoot({ provide: DateAdapter, useFactory: momentAdapterFactory })
+    CalendarModule.forRoot({ provide: DateAdapter, useFactory: momentAdapterFactory }),
+    NgxMaskModule.forRoot(),
+    JwtModule.forRoot({
+      config: {
+        tokenGetter: tokenGetter,
+        allowedDomains: ["example.com"],
+        disallowedRoutes: ["http://example.com/examplebadroute/"],
+      },
+    }),
   ],
   providers: [],
   bootstrap: [AppComponent]

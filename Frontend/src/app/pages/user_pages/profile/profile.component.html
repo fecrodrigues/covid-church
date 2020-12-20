@@ -9,24 +9,24 @@
             <h4>Dados Pessoais</h4>
             <mat-divider></mat-divider>
             
-            <mat-form-field appearance="fill" [floatLabel]="auto">
+            <mat-form-field appearance="fill" floatLabel="auto">
             <mat-label>CPF *</mat-label>
             <input matInput formControlName="cpf" placeholder="000.000.000-00">
             <mat-error *ngIf="form.controls.cpf.invalid">CPF é obrigatório</mat-error>
             </mat-form-field>
 
-            <mat-form-field appearance="fill" [floatLabel]="auto">
+            <mat-form-field appearance="fill" floatLabel="auto">
             <mat-label>Nome *</mat-label>
             <input matInput formControlName="nome">
             <mat-error *ngIf="form.controls.nome.invalid">Nome é obrigatório</mat-error>
             </mat-form-field>
 
-            <mat-form-field appearance="fill" [floatLabel]="auto">
+            <mat-form-field appearance="fill" floatLabel="auto">
                 <mat-label>Sobrenome</mat-label>
                 <input matInput formControlName="sobrenome">
             </mat-form-field>
 
-            <mat-form-field appearance="fill" [floatLabel]="auto">
+            <mat-form-field appearance="fill" floatLabel="auto">
                 <mat-label>Data de Nascimento *</mat-label>
                 <input matInput formControlName="dataNascimento">
                 <mat-error *ngIf="form.controls.nome.invalid">Data de Nascimento é obrigatório</mat-error>
@@ -35,12 +35,12 @@
             <h4>Dados de Acesso</h4>
             <mat-divider></mat-divider>
             
-            <mat-form-field appearance="fill" [floatLabel]="auto">
+            <mat-form-field appearance="fill" floatLabel="auto">
                 <mat-label>Login</mat-label>
                 <input matInput formControlName="login">
             </mat-form-field>
 
-            <mat-form-field appearance="fill" [floatLabel]="auto">
+            <mat-form-field appearance="fill" floatLabel="auto">
                 <mat-label>Senha</mat-label>
                 <input matInput formControlName="senha">
             </mat-form-field>

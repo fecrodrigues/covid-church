@@ -12,6 +12,7 @@ import { ProfileComponent } from './pages/user_pages/profile/profile.component';
 import { MinstituicaoComponent } from './pages/user_pages/minstituicao/minstituicao.component';
 import { McultoComponent } from './pages/user_pages/mculto/mculto.component';
 import { AgendamentoComponent } from './pages/user_pages/agendamento/agendamento.component';
+import { CadastroComponent } from './pages/cadastro/cadastro.component';
 
 import { AuthGuardService as AuthGuard } from './services/auth-guard.service';
 
@@ -26,6 +27,7 @@ const routes: Routes = [
     { path: 'meus-cultos', component: McultoComponent },
     { path: 'agendamentos', component: AgendamentoComponent }
   ]},
+  { path: 'cadastro', component: CadastroComponent },
   { path: 'login', component: LoginComponent }
 ]
 

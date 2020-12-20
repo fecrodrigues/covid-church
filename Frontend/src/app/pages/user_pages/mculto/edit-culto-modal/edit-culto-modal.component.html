@@ -1,0 +1,46 @@
+<h1 mat-dialog-title>Editar Culto</h1>
+<div mat-dialog-content>
+
+    <form [formGroup]="form" (submit)="updateCultoData($event)">
+
+        
+        <div gdAuto="row dense">
+
+            <input type="hidden" formControlName="id">
+            <input type="hidden" formControlName="idInstituicao">
+
+            <mat-form-field appearance="fill" floatLabel="auto">
+                <mat-label>Descrição *</mat-label>
+                <input matInput formControlName="descricao">
+                <mat-error *ngIf="form.controls.descricao.invalid">Descrição é obrigatória</mat-error>
+            </mat-form-field>
+
+           
+            <mat-form-field appearance="fill" floatLabel="auto">
+                <mat-label>Data do Culto*</mat-label>
+                <input mask="00/00/0000 00:00:00" matInput formControlName="data">
+                <mat-error *ngIf="form.controls.data.invalid">Data do Culto é obrigatória</mat-error>
+            </mat-form-field>
+
+            <mat-form-field appearance="fill" floatLabel="auto">
+                <mat-label>Duração em minutos*</mat-label>
+                <input mask="0*" matInput formControlName="duracao">
+                <mat-error *ngIf="form.controls.duracao.invalid">Duração é obrigatória</mat-error>
+            </mat-form-field>
+
+            <mat-form-field appearance="fill" floatLabel="auto">
+                <mat-label>Capacidade*</mat-label>
+                <input mask="0*" matInput formControlName="capacidade">
+                <mat-error *ngIf="form.controls.capacidade.invalid">Capacidade é obrigatória</mat-error>
+            </mat-form-field>
+           
+            <button type="submit" mat-raised-button color="primary">Atualizar Dados</button>
+
+        </div>
+
+    </form>
+ 
+</div>
+<div mat-dialog-actions>
+    <button mat-raised-button style="width: 100%;" (click)="onNoClick()">Fechar</button>
+</div>

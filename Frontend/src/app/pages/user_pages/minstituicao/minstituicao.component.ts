@@ -3,6 +3,9 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { ApiCallerService } from 'src/app/services/api-caller.service';
+import { EditInstituicaoModalComponent } from './edit-instituicao-modal/edit-instituicao-modal.component';
+
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-minstituicao',
@@ -14,7 +17,7 @@ export class MinstituicaoComponent implements AfterViewInit {
   @ViewChild(MatPaginator) paginator: MatPaginator | undefined;
   selectedRowIndex: Number | undefined;
 
-  constructor(private modalControl: MatDialog, private apiCaller: ApiCallerService) { }
+  constructor(private modal: MatDialog, private apiCaller: ApiCallerService) { }
 
   displayedColumns: string[] = ['nome', 'endereco', 'capacidade', 'buttons'];
   dataSource: MatTableDataSource<any> = new MatTableDataSource<any>();
@@ -29,12 +32,33 @@ export class MinstituicaoComponent implements AfterViewInit {
     this.dataSource.paginator = this.paginator? this.paginator: null;
   }
 
-  openSchedulingModal(row: any) {
-    console.log(row, 'aushdas')
-    /*this.selectedRowIndex = row.id;
-    this.schedulingModal.open(SchedulingModalComponent, {
+  deleteInstituicao(row: any) {
+    
+    Swal.fire({
+      title: 'Você tem certeza?',
+      text: "Você não podera voltar atrás",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Sim, excluir!',
+      cancelButtonText: 'Não, cancelar!',
+      reverseButtons: false
+    }).then((result) => {
+      
+      if (result.isConfirmed) {
+        Swal.fire(
+          'Feito!',
+          'A instituição foi excluida com sucesso.',
+          'success'
+        )
+      }
+
+    })
+  }
+
+  openEditModal(row: any) {
+    this.modal.open(EditInstituicaoModalComponent, {
       data: row
-    });*/
+    });
   }
   
 }
