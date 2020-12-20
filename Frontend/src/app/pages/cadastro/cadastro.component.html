@@ -31,7 +31,7 @@
 
         <mat-form-field appearance="fill" floatLabel="auto">
             <mat-label>Data de Nascimento *</mat-label>
-            <input matInput formControlName="dataNascimento">
+            <input mask="00/00/0000" matInput formControlName="dataNascimento">
             <mat-error *ngIf="form.controls.nome.invalid">Data de Nascimento é obrigatório</mat-error>
         </mat-form-field>
 
@@ -40,17 +40,17 @@
         
         <mat-form-field appearance="fill" floatLabel="auto">
             <mat-label>Login *</mat-label>
-            <input matInput formControlName="login">
-            <mat-error *ngIf="form.controls.login.invalid">Login é obrigatório</mat-error>
+            <input matInput formControlName="userName">
+            <mat-error *ngIf="form.controls.userName.invalid">Login é obrigatório</mat-error>
         </mat-form-field>
 
         <mat-form-field appearance="fill" floatLabel="auto">
             <mat-label>Senha *</mat-label>
-            <input matInput formControlName="senha">
-            <mat-error *ngIf="form.controls.senha.invalid">Senha é obrigatória</mat-error>
+            <input type="password" matInput formControlName="password">
+            <mat-error *ngIf="form.controls.password.invalid">Senha é obrigatória</mat-error>
         </mat-form-field>
 
-        <button type="submit" mat-raised-button color="primary">Atualizar Dados</button>
+        <button type="submit" mat-raised-button color="primary">Criar Conta</button>
         <a style="margin-top: 10px;" routerLink="/login">
             Voltar
         </a>

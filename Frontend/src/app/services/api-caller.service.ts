@@ -7,7 +7,9 @@ import { Observable, Subscription } from 'rxjs';
 })
 export class ApiCallerService {
 
-  constructor(private httpClient: HttpClient) {   }
+  baseUrl: String = 'http://localhost:3001'
+
+  constructor(private httpClient: HttpClient) {  }
 
 
   carregarListaInstituicoes(): Observable<any> {
@@ -22,6 +24,10 @@ export class ApiCallerService {
   carregarListadeAgendamentosPorUsuario(cpf: String): Observable<any> {
     console.log(cpf, 'cpf')
     return this.httpClient.get("assets/jsonExamples.json");
+  }
+
+  cadastrarUsuario(infoUsuario: any): Observable<any> {
+    return this.httpClient.post(this.baseUrl + '/pessoa', infoUsuario);
   }
 
 }
