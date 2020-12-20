@@ -3,6 +3,8 @@ package br.com.fiap.api.model;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+
+import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.stereotype.Repository;
 
@@ -12,6 +14,8 @@ import br.com.fiap.api.enums.FaixaEtariaEnum;
 @Repository
 @Document(collection = "Pessoa")
 public class PessoaModel {
+	
+	@Id
     private String cpf;
     private String nome;
     private String sobrenome;

@@ -1,6 +1,6 @@
 package br.com.fiap.api.model;
 
-import br.com.fiap.api.dto.ShortInfoPessoaDTO;
+import br.com.fiap.api.dto.ShortInfoCultoDTO;
 
 public class ShortInfoCultoModel {
 
@@ -9,7 +9,7 @@ public class ShortInfoCultoModel {
 	
 	public ShortInfoCultoModel() {}
 	
-	public ShortInfoCultoModel(ShortInfoPessoaDTO dto) {
+	public ShortInfoCultoModel(ShortInfoCultoDTO dto) {
 		this.cpf = dto.getCpf();
 		this.nome = dto.getNome();
 	}
