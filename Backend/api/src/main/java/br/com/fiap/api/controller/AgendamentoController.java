@@ -4,7 +4,6 @@ import br.com.fiap.api.dto.AgendamentoCountDTO;
 import br.com.fiap.api.model.AgendamentoModel;
 import br.com.fiap.api.repository.AgendamentoRepository;
 import br.com.fiap.api.utils.FindAgendamento;
-import netscape.javascript.JSObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -22,6 +21,7 @@ public class AgendamentoController {
 
     @PostMapping("/agendamento")
     public ResponseEntity<AgendamentoModel> addAgendamento(@RequestBody AgendamentoModel agendamento){
+
         List<AgendamentoModel> dbAgendamento = agendamentoRepository.findByIdPessoa(agendamento.getIdPessoa());
         Boolean confere = new FindAgendamento().findAgendamento(agendamento.getIdCulto(), dbAgendamento);
         if (!confere) {
