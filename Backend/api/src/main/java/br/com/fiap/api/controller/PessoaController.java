@@ -1,7 +1,9 @@
 package br.com.fiap.api.controller;
 
+import br.com.fiap.api.dto.PessoaPartialUpdateDTO;
 import br.com.fiap.api.model.PessoaModel;
 import br.com.fiap.api.repository.PessoaRepository;
+import br.com.fiap.api.utils.JsonNullableUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -10,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 public class PessoaController {
@@ -20,6 +23,9 @@ public class PessoaController {
     @Autowired
     private PessoaRepository pessoaRepository;
 
+//    @Autowired
+//    PasswordEncoder passwordEncoder;
+
     @RequestMapping(value = "/")
     public void redirect(HttpServletResponse response) throws IOException {
         response.sendRedirect("/swagger-ui.html");
@@ -27,11 +33,32 @@ public class PessoaController {
 
     @PostMapping("/pessoa")
     public ResponseEntity<PessoaModel> addPessoa(@RequestBody PessoaModel pessoa) {
-        pessoaModel = pessoaRepository.save(pessoa);
-        if (pessoaModel != null)
+        PessoaModel dbPessoa = pessoaRepository.findByCpf(pessoa.getCpf());
+        if (dbPessoa == null) {
+            pessoaModel = pessoaRepository.save(pessoa);
             return ResponseEntity.status(HttpStatus.CREATED).body(pessoaModel);
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+        } else {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+        }
     }
+
+
+/*    @PostMapping("/pessoa")
+    public ResponseEntity<PessoaModel> addPessoa(@RequestBody PessoaModel pessoa) {
+        PessoaModel newPessoa = new PessoaModel();
+        newPessoa.setCpf(pessoa.getCpf());
+        newPessoa.setNome(pessoa.getNome());
+        newPessoa.setSobrenome(pessoa.getSobrenome());
+        newPessoa.setDataNascimento(pessoa.getDataNascimento());
+        newPessoa.setIdade(pessoa.getIdade());
+        newPessoa.setPassword(passwordEncoder.encode(pessoa.getPassword()));
+
+        pessoaModel = pessoaRepository.save(newPessoa);
+        if (pessoaModel != null)
+            return ResponseEntity.status(HttpStatus.CREATED).body(newPessoa);
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+
+    }*/
 
     @GetMapping("/pessoas")
     public List<PessoaModel> getPessoas(){ return pessoaRepository.findAll(); }
@@ -43,6 +70,35 @@ public class PessoaController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         return ResponseEntity.ok(pessoaModel);
     }
-/*    @PutMapping("/pessoa")
-    public PessoaModel putPessoa(@RequestBody PessoaModel pessoaModel) {return pessoaRepository.updateByCpf(pessoaModel.getCpf());}*/
+
+    @PatchMapping("/pessoa/{cpf}")
+    public ResponseEntity<Void> putPessoa(@PathVariable String cpf, @RequestBody PessoaPartialUpdateDTO pessoaPartialUpdateDTO) {
+        Optional<PessoaModel> dbPessoaModel = pessoaRepository.findById(cpf);
+        if (!dbPessoaModel.isPresent()) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
+        PessoaModel pessoaModelToEdit = dbPessoaModel.get();
+        JsonNullableUtils.changeIfPresent(pessoaPartialUpdateDTO.getNome(), pessoaModelToEdit::setNome);
+        JsonNullableUtils.changeIfPresent(pessoaPartialUpdateDTO.getSobrenome(), pessoaModelToEdit::setSobrenome);
+        JsonNullableUtils.changeIfPresent(pessoaPartialUpdateDTO.getDataNascimento(), pessoaModelToEdit::setDataNascimento);
+        JsonNullableUtils.changeIfPresent(pessoaPartialUpdateDTO.getIdade(), pessoaModelToEdit::setIdade);
+        JsonNullableUtils.changeIfPresent(pessoaPartialUpdateDTO.getUserName(), pessoaModelToEdit::setUserName);
+        JsonNullableUtils.changeIfPresent(pessoaPartialUpdateDTO.getPassword(), pessoaModelToEdit::setPassword);
+
+        pessoaRepository.save(pessoaModelToEdit);
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+
+    }
+
+    @DeleteMapping("/pessoa/{cpf}")
+    public ResponseEntity<Void> delPessoa(@PathVariable String cpf) {
+        PessoaModel pessoa = pessoaRepository.findByCpf(cpf);
+        if (pessoa != null) {
+            pessoaRepository.deleteByCpf(cpf);
+            return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+        } else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
+    }
+
 }
