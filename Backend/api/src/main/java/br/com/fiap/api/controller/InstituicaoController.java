@@ -48,7 +48,7 @@ public class InstituicaoController {
         Optional<InstituicaoModel> instituicao = instituicaoRepository.findById(id);
         if (instituicao.isPresent()) {
             instituicaoRepository.deleteById(id);
-            return ResponseEntity.status(HttpStatus.OK).build();
+            return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
         } else {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
@@ -60,7 +60,7 @@ public class InstituicaoController {
         PessoaModel pessoa = pessoaRepository.findByCpf(idUsuario);
         if (pessoa != null) {
             instituicaoRepository.deleteByIdUsuario(idUsuario);
-            return ResponseEntity.status(HttpStatus.OK).build();
+            return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
         } else {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }

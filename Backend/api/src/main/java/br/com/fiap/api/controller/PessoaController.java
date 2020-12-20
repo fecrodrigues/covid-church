@@ -33,10 +33,13 @@ public class PessoaController {
 
     @PostMapping("/pessoa")
     public ResponseEntity<PessoaModel> addPessoa(@RequestBody PessoaModel pessoa) {
-        pessoaModel = pessoaRepository.save(pessoa);
-        if (pessoaModel != null)
+        PessoaModel dbPessoa = pessoaRepository.findByCpf(pessoa.getCpf());
+        if (dbPessoa == null) {
+            pessoaModel = pessoaRepository.save(pessoa);
             return ResponseEntity.status(HttpStatus.CREATED).body(pessoaModel);
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+        } else {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+        }
     }
 
 
@@ -83,7 +86,19 @@ public class PessoaController {
         JsonNullableUtils.changeIfPresent(pessoaPartialUpdateDTO.getPassword(), pessoaModelToEdit::setPassword);
 
         pessoaRepository.save(pessoaModelToEdit);
-        return ResponseEntity.status(HttpStatus.OK).build();
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
 
     }
+
+    @DeleteMapping("/pessoa/{cpf}")
+    public ResponseEntity<Void> delPessoa(@PathVariable String cpf) {
+        PessoaModel pessoa = pessoaRepository.findByCpf(cpf);
+        if (pessoa != null) {
+            pessoaRepository.deleteByCpf(cpf);
+            return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+        } else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
+    }
+
 }

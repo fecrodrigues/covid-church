@@ -8,5 +8,8 @@ import java.util.List;
 
 @Repository
 public interface AgendamentoRepository extends MongoRepository<AgendamentoModel,String> {
+    AgendamentoModel save(AgendamentoModel agendamentoModel);
     List<AgendamentoModel> findAll();
+    List<AgendamentoModel> findByIdPessoa(String idPessoa);
+    List<AgendamentoModel> findByIdCulto(String idCulto);
 }

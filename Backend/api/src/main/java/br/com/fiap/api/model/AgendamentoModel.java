@@ -13,14 +13,12 @@ public class AgendamentoModel {
     private String id;
     private String idCulto;
     private String idPessoa;
-    private Date data;
     private Date dataAgendamento;
 
     public AgendamentoModel(String id, String idCulto, String idPessoa, Date data, Date dataAgendamento){
         this.id = id;
         this.idCulto = idCulto;
         this.idPessoa = idPessoa;
-        this.data = data;
         this.dataAgendamento = dataAgendamento;
     }
 
@@ -50,14 +48,6 @@ public class AgendamentoModel {
 
     public void setIdPessoa(String idPessoa) {
         this.idPessoa = idPessoa;
-    }
-
-    public Date getData() {
-        return data;
-    }
-
-    public void setData(Date data) {
-        this.data = data;
     }
 
     public Date getDataAgendamento() {
