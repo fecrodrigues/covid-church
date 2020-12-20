@@ -3,6 +3,8 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { ApiCallerService } from 'src/app/services/api-caller.service';
 
+import Swal from 'sweetalert2';
+
 @Component({
   selector: 'app-agendamento',
   templateUrl: './agendamento.component.html',
@@ -34,7 +36,27 @@ export class AgendamentoComponent implements AfterViewInit {
   }
 
   cancelSchedule(schedule: any) {
-    console.log(schedule, 'schedule');
+    
+    Swal.fire({
+      title: 'Deseja cancelar o agendamento?',
+      text: "Você não podera voltar atrás",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Sim!',
+      cancelButtonText: 'Não!',
+      reverseButtons: false
+    }).then((result) => {
+      
+      if (result.isConfirmed) {
+        Swal.fire(
+          'Feito!',
+          'O Agendamento foi cancelado com sucesso.',
+          'success'
+        )
+      }
+
+    })
+  
   }
   
 }

@@ -1,0 +1,60 @@
+<div style="text-align: center;">
+    <h3>Registre-se para utilizar nossa plataforma</h3>
+    <p>É simples e rápido, após cadastrar fique a vontade para encontrar suas instituições e agendar sua presença em cultos</p>
+</div>
+
+
+<form [formGroup]="form" (submit)="saveUserData($event)">
+
+        
+    <div fxLayout="column" fxLayoutAlign="center center">
+
+        <h4>Dados Pessoais</h4>
+        <mat-divider></mat-divider>
+        
+        <mat-form-field appearance="fill" floatLabel="auto">
+        <mat-label>CPF *</mat-label>
+        <input mask="000.000.000-00" matInput formControlName="cpf" placeholder="000.000.000-00">
+        <mat-error *ngIf="form.controls.cpf.invalid">CPF é obrigatório</mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="fill" floatLabel="auto">
+        <mat-label>Nome *</mat-label>
+        <input matInput formControlName="nome">
+        <mat-error *ngIf="form.controls.nome.invalid">Nome é obrigatório</mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="fill" floatLabel="auto">
+            <mat-label>Sobrenome</mat-label>
+            <input matInput formControlName="sobrenome">
+        </mat-form-field>
+
+        <mat-form-field appearance="fill" floatLabel="auto">
+            <mat-label>Data de Nascimento *</mat-label>
+            <input matInput formControlName="dataNascimento">
+            <mat-error *ngIf="form.controls.nome.invalid">Data de Nascimento é obrigatório</mat-error>
+        </mat-form-field>
+
+        <h4>Dados de Acesso</h4>
+        <mat-divider></mat-divider>
+        
+        <mat-form-field appearance="fill" floatLabel="auto">
+            <mat-label>Login *</mat-label>
+            <input matInput formControlName="login">
+            <mat-error *ngIf="form.controls.login.invalid">Login é obrigatório</mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="fill" floatLabel="auto">
+            <mat-label>Senha *</mat-label>
+            <input matInput formControlName="senha">
+            <mat-error *ngIf="form.controls.senha.invalid">Senha é obrigatória</mat-error>
+        </mat-form-field>
+
+        <button type="submit" mat-raised-button color="primary">Atualizar Dados</button>
+        <a style="margin-top: 10px;" routerLink="/login">
+            Voltar
+        </a>
+    
+    </div>
+
+</form>

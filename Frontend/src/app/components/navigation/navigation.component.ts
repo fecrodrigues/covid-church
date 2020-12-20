@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { Observable } from 'rxjs';
 import { map, shareReplay } from 'rxjs/operators';
+import { Router } from '@angular/router';
 
 import { faUserCircle, faSignOutAlt, faCalendarDay, faChurch, faUser, faUsers, faBars, faCalendarAlt } from '@fortawesome/free-solid-svg-icons';
 
@@ -29,10 +30,11 @@ export class NavigationComponent {
       shareReplay()
     );
 
-  constructor(private breakpointObserver: BreakpointObserver) {}
+  constructor(private breakpointObserver: BreakpointObserver, private router: Router) {}
 
   logout() {
-
+    this.router.navigate(['login']);
+    localStorage.removeItem('token');
   }
 
 }

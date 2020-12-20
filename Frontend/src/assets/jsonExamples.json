@@ -76,28 +76,34 @@
 
    "cultos":[
       {
-         "idInstituicao":"",
+         "id": "3434342",
+         "idInstituicao":"1",
          "descricao":"Super culto",
-         "data":"08/11/2020",
+         "data":"08/11/2020 12:41:10",
          "duracao":"5",
          "capacidade":"40",
-         "periodicidade":"1"
+         "periodicidade":"1",
+         "vagas": 0
       },
       {
-         "idInstituicao":"",
+         "id": "6544564",
+         "idInstituicao":"2",
          "descricao":"Culto forte",
-         "data":"08/12/2020",
+         "data":"08/12/2020 12:41:10",
          "duracao":"5",
          "capacidade":"12",
-         "periodicidade":"1"
+         "periodicidade":"1",
+         "vagas": 10
       },
       {
-         "idInstituicao":"",
+         "id": "765675",
+         "idInstituicao":"3",
          "descricao":"Culto muito potente",
-         "data":"15/12/2020",
+         "data":"15/12/2020 12:41:10",
          "duracao":"7",
-         "capacidade":"10",
-         "periodicidade":"1"
+         "capacidade":"20",
+         "periodicidade":"1",
+         "vagas": 12
       }
    ],
 

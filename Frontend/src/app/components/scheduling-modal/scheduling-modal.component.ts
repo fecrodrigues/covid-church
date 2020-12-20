@@ -4,6 +4,7 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 
 import { ApiCallerService } from './../../services/api-caller.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-scheduling-modal',
@@ -38,10 +39,53 @@ export class SchedulingModalComponent implements OnInit {
   }
 
   scheduleItem(row: any) {
-    console.log(row, 'row')
+
+    Swal.fire({
+      title: 'Confirmar agendamento?',
+      html: `
+        <p>${row.descricao}</p>
+        <p>${row.data}</p>
+      `,
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Confirmar',
+      cancelButtonText: 'Cancelar',
+      reverseButtons: false
+    }).then((result) => {
+      
+      if (result.isConfirmed) {
+        Swal.fire(
+          'Feito!',
+          'Agendamento realizado.',
+          'success'
+        )
+      }
+
+    })
+
   }
 
-  scheduleCancel() {
+  scheduleCancel(row: any) {
+
+    Swal.fire({
+      title: 'Confirmar cancelamento?',
+      html: ``,
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Confirmar',
+      cancelButtonText: 'Cancelar',
+      reverseButtons: false
+    }).then((result) => {
+      
+      if (result.isConfirmed) {
+        Swal.fire(
+          'Feito!',
+          'Agendamento cancelado.',
+          'success'
+        )
+      }
+
+    })
 
   }
   

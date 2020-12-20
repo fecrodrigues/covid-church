@@ -1,0 +1,39 @@
+<h1 mat-dialog-title>Editar Instituição</h1>
+<div mat-dialog-content>
+
+    <form [formGroup]="form" (submit)="updateInstituicaoData($event)">
+
+        
+        <div gdAuto="row dense">
+
+            <input type="hidden" formControlName="id">
+
+            <mat-form-field appearance="fill" floatLabel="auto">
+                <mat-label>Nome *</mat-label>
+                <input matInput formControlName="nome">
+                <mat-error *ngIf="form.controls.nome.invalid">Nome é obrigatório</mat-error>
+            </mat-form-field>
+
+           
+            <mat-form-field appearance="fill" floatLabel="auto">
+                <mat-label>Endereço*</mat-label>
+                <input matInput formControlName="endereco">
+                <mat-error *ngIf="form.controls.endereco.invalid">Endereço é obrigatório</mat-error>
+            </mat-form-field>
+
+            <mat-form-field appearance="fill" floatLabel="auto">
+                <mat-label>Capacidade*</mat-label>
+                <input mask="0*" matInput formControlName="capacidade">
+                <mat-error *ngIf="form.controls.capacidade.invalid">Capacidade é obrigatória</mat-error>
+            </mat-form-field>
+           
+            <button type="submit" mat-raised-button color="primary">Atualizar Dados</button>
+
+        </div>
+
+    </form>
+ 
+</div>
+<div mat-dialog-actions>
+    <button mat-raised-button style="width: 100%;" (click)="onNoClick()">Fechar</button>
+</div>
