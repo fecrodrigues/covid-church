@@ -1,36 +1,30 @@
-package br.com.fiap.api.model;
+package br.com.fiap.api.dto;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.Document;
-import org.springframework.stereotype.Repository;
+import br.com.fiap.api.model.PessoaModel;
+
 import java.util.Date;
 
-@Repository
-@Document(collection = "Pessoa")
-public class PessoaModel {
+public class PessoaDTO {
 
-    @Id
     private String cpf;
     private String nome;
     private String sobrenome;
     private Date dataNascimento;
     private Integer idade;
     private String userName;
-    @JsonIgnore
     private String password;
 
-    public PessoaModel(String cpf, String nome, String sobrenome, Date dataNascimento, Integer idade, String userName, String password) {
-        this.cpf = cpf;
-        this.nome = nome;
-        this.sobrenome = sobrenome;
-        this.dataNascimento = dataNascimento;
-        this.idade = idade;
-        this.userName = userName;
-        this.password = password;
-    }
+    public PessoaDTO() {}
 
-    public PessoaModel() {}
+    public PessoaDTO(PessoaModel model) {
+        this.cpf = model.getCpf();
+        this.nome = model.getNome();
+        this.sobrenome = model.getSobrenome();
+        this.dataNascimento = model.getDataNascimento();
+        this.idade = model.getIdade();
+        this.userName = model.getUserName();
+        this.password = model.getPassword();
+    }
 
     public String getCpf() {
         return cpf;
@@ -87,5 +81,4 @@ public class PessoaModel {
     public void setPassword(String password) {
         this.password = password;
     }
-
 }

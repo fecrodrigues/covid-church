@@ -12,5 +12,5 @@ public interface PessoaRepository extends MongoRepository<PessoaModel,String> {
     PessoaModel save(PessoaModel pessoaModel);
     List<PessoaModel> findAll();
     PessoaModel findByCpf(String cpf);
-//    PessoaModel updateByCpf(String cpf);
+
 }
