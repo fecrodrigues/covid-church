@@ -11,7 +11,7 @@ import { ApiCallerService } from 'src/app/services/api-caller.service';
 })
 export class EditCultoModalComponent implements OnInit {
 
-  dateMask = [/\d/, /\d/, '/', /\d/, /\d/, '/', /\d/, /\d/, /\d/, /\d/]
+  operation = "";
 
   form!: FormGroup;
   formGroup = {
@@ -31,12 +31,18 @@ export class EditCultoModalComponent implements OnInit {
     }
 
   ngOnInit(): void {
-    this.form.controls['id'].setValue(this.data.id);
-    this.form.controls['idInstituicao'].setValue(this.data.idInstituicao);
-    this.form.controls['data'].setValue(this.data.data);
-    this.form.controls['descricao'].setValue(this.data.descricao);
-    this.form.controls['duracao'].setValue(this.data.duracao);
-    this.form.controls['capacidade'].setValue(this.data.capacidade);
+    if(this.data.id) {
+      this.operation = 'Atualizar';
+      this.form.controls['id'].setValue(this.data.id);
+      this.form.controls['idInstituicao'].setValue(this.data.idInstituicao);
+      this.form.controls['data'].setValue(this.data.data);
+      this.form.controls['descricao'].setValue(this.data.descricao);
+      this.form.controls['duracao'].setValue(this.data.duracao);
+      this.form.controls['capacidade'].setValue(this.data.capacidade);
+    } else {
+      this.form.controls['idInstituicao'].setValue(this.data.idInstituicao);
+      this.operation = 'Inserir';
+    }
   }
   
   onNoClick(): void {
@@ -47,7 +53,15 @@ export class EditCultoModalComponent implements OnInit {
     event.preventDefault();
 
     if(this.form.valid) {
-      console.log(this.form.getRawValue())
+
+      let formValues = this.form.getRawValue();
+      if(this.data.id) {
+        //edita
+        console.log(formValues, 'edita')
+      } else {
+        //criar
+        console.log(formValues, 'cria')
+      }
     }
   }
 

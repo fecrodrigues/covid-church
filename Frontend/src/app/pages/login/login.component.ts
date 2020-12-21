@@ -27,7 +27,7 @@ export class LoginComponent implements OnInit {
     event.preventDefault();
 
     if (this.form.valid) {
-      localStorage.setItem('token', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c');
+      localStorage.setItem('token', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJjcGYiOiIxMjM0NTY3ODkxMiJ9.Nckx1yQvv6fbNOPiZKNljKEJX5IPAEmVU_bzErHNBIw');
       this.router.navigate([''])
     }
   }

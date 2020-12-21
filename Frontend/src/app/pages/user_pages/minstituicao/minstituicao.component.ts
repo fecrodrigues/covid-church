@@ -23,9 +23,18 @@ export class MinstituicaoComponent implements AfterViewInit {
   dataSource: MatTableDataSource<any> = new MatTableDataSource<any>();
 
   ngOnInit() {
-    this.apiCaller.carregarListaInstituicoes().subscribe(response => {
-      this.dataSource.data = response.instituicoes
-    })
+    this.carregarListaInstituicoes();
+  }
+
+  carregarListaInstituicoes() {
+    this.apiCaller.carregarListaInstituicoesUsuario().subscribe(
+      response => {
+        this.dataSource.data = response;
+      },
+      error => {
+        this.dataSource.data = [];
+      }
+    )
   }
 
   ngAfterViewInit() {
@@ -45,20 +54,43 @@ export class MinstituicaoComponent implements AfterViewInit {
     }).then((result) => {
       
       if (result.isConfirmed) {
-        Swal.fire(
-          'Feito!',
-          'A instituição foi excluida com sucesso.',
-          'success'
+
+        this.apiCaller.excluirInstituicao(row.id).subscribe(
+          (response) => {
+            Swal.fire(
+              'Feito!',
+              'A instituição foi excluida com sucesso.',
+              'success'
+            ).then(() => {
+              this.carregarListaInstituicoes();
+            })
+          },
+          (error) => {
+            Swal.fire(
+              'Ops!',
+              'Não foi possível excluir a instituição.',
+              'error'
+            )
+          }  
         )
+
+       
       }
 
     })
   }
 
-  openEditModal(row: any) {
-    this.modal.open(EditInstituicaoModalComponent, {
+  openEditModal(row?: any) {
+    let dialogModal = this.modal.open(EditInstituicaoModalComponent, {
       data: row
     });
+
+    dialogModal.afterClosed().subscribe(result => {
+      if(result === 'success') {
+        this.carregarListaInstituicoes();
+      }
+    });
+
   }
   
 }

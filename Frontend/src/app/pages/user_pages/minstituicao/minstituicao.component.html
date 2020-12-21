@@ -1,5 +1,9 @@
 <app-page-header title="Minhas Instituições" description="Aqui você encontra uma lista com suas instituições cadastradas"></app-page-header>
 
+<div style="padding: 10px; text-align: right;">
+  <button mat-raised-button (click)="openEditModal()">Nova Instituição</button>
+</div>
+
 <div class="mat-elevation-z3">
   <table mat-table [dataSource]="dataSource">
 
@@ -38,6 +42,8 @@
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
     <tr mat-row *matRowDef="let row; columns: displayedColumns;" [ngClass]="{'highlight': selectedRowIndex == row.id}"></tr>
   </table>
+
+  <div style="padding: 17px; text-align: center;" *ngIf="dataSource.data.length === 0">Você não possui instituições cadastradas</div>
 
   <mat-paginator [pageSizeOptions]="[7, 14, 21]" showFirstLastButtons></mat-paginator>
 </div>

@@ -17,11 +17,8 @@ import { MatDialog } from '@angular/material/dialog';
 
 export class McultoComponent implements AfterViewInit {
   
-  instituicao: FormControl = new FormControl('');
-
-  form: FormGroup = new FormGroup({
-    instituicao: new FormControl('')  
-  })
+  instituicoes: any[] = [];
+  instituicaoSelecionada: String | undefined;
 
   displayedColumns: string[] = ['descricao', 'data', 'duracao', 'capacidade', 'buttons'];
   dataSourceCult: MatTableDataSource<any> = new MatTableDataSource<any>();
@@ -37,11 +34,36 @@ export class McultoComponent implements AfterViewInit {
     private modal: MatDialog) { }
 
   ngOnInit(): void {
-    this.apiCaller.carregarListadeCultosPorInstituicao(this.form.controls.instituicao.value).subscribe(response => {
-      console.log(response, 'response')
-      this.dataSourceCult.data = response.cultos;
-    })
+    this.apiCaller.carregarListaInstituicoesUsuario().subscribe(
+      response => {
+        this.instituicoes = response;
+        
+        if(response && response.length > 0) {
+          this.carregarListaDeCultos({ target: { value: response[0].id } })
+        }
+      },
+      error => {
+        Swal.fire(
+          'Ops!',
+          'Não foi possível carregar a lista de instituições',
+          'error'
+        )
+      }
+    )
+  }
 
+  carregarListaDeCultos(event: any) {
+    const instituicao = event.target.value;
+    this.instituicaoSelecionada = instituicao;
+
+    this.apiCaller.carregarListadeCultosPorInstituicao(instituicao).subscribe(
+      response => {
+        this.dataSourceCult.data = response.cultos;
+      }, 
+      error => {
+        this.dataSourceCult.data = [];
+      }
+    )
   }
 
   deleteCulto(row: any) {
@@ -67,7 +89,10 @@ export class McultoComponent implements AfterViewInit {
     })
   }
 
-  openEditModal(row: any) {
+  openEditModal(row?: any) {
+    !row? row = { idInstituicao: this.instituicaoSelecionada }: row;
+
+    console.log(this.instituicaoSelecionada, 'hue')
     this.modal.open(EditCultoModalComponent, {
       data: row
     });

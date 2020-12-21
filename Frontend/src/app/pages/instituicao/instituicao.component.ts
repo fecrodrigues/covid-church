@@ -2,6 +2,7 @@ import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
+import Swal from 'sweetalert2';
 import { SchedulingModalComponent } from './../../components/scheduling-modal/scheduling-modal.component';
 
 import { ApiCallerService } from './../../services/api-caller.service';
@@ -22,9 +23,14 @@ export class InstituicaoComponent implements AfterViewInit, OnInit {
   dataSource: MatTableDataSource<any> = new MatTableDataSource<any>();
 
   ngOnInit() {
-    this.apiCaller.carregarListaInstituicoes().subscribe(response => {
-      this.dataSource.data = response.instituicoes
-    })
+    this.apiCaller.carregarListaInstituicoes().subscribe(
+      (response) => {
+        this.dataSource.data = response
+      },
+      (error) => {
+        console.log(error, 'err')
+      }
+    )
   }
 
   ngAfterViewInit() {
