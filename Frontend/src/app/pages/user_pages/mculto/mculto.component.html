@@ -1,14 +1,16 @@
 
 <app-page-header title="Meus Cultos" description="Aqui você encontra uma lista com seus cultos cadastrados"></app-page-header>
 
-
-<!--<mat-form-field appearance="fill">
-  <mat-label>Select me</mat-label>
-  <select mat-select>
-    <option mat-option value="option">Option</option>
+<mat-form-field appearance="fill">
+  <mat-label>Instituição</mat-label>
+  <select (change)="carregarListaDeCultos($event)" matNativeControl required>
+    <option *ngFor="let instituicao of instituicoes" [value]="instituicao.id">{{ instituicao.nome }}</option>
   </select>
-  <mat-hint align="end">Here's the dropdown arrow ^</mat-hint>
-</mat-form-field>-->
+</mat-form-field>
+
+<div style="padding: 10px; text-align: right;">
+  <button mat-raised-button (click)="openEditModal()">Novo Culto</button>
+</div>
 
 <div class="mat-elevation-z3">
   <table mat-table [dataSource]="dataSourceCult">
@@ -28,7 +30,7 @@
     <!-- Weight Column -->
     <ng-container matColumnDef="duracao">
       <th mat-header-cell *matHeaderCellDef> Duração </th>
-      <td mat-cell *matCellDef="let element"> {{element.duracao}} hrs </td>
+      <td mat-cell *matCellDef="let element"> {{element.duracao}} Minutos </td>
     </ng-container>
 
     <!-- Symbol Column -->
@@ -48,6 +50,8 @@
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
     <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
   </table>
+
+  <div style="padding: 17px; text-align: center;" *ngIf="dataSourceCult.data.length === 0">Você não possui cultos cadastradas</div>
 
   <mat-paginator [pageSizeOptions]="[7, 14, 21]" showFirstLastButtons></mat-paginator>
 </div>

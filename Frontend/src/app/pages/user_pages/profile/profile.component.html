@@ -28,7 +28,7 @@
 
             <mat-form-field appearance="fill" floatLabel="auto">
                 <mat-label>Data de Nascimento *</mat-label>
-                <input matInput formControlName="dataNascimento">
+                <input mask="00/00/0000" matInput formControlName="dataNascimento">
                 <mat-error *ngIf="form.controls.nome.invalid">Data de Nascimento é obrigatório</mat-error>
             </mat-form-field>
 

@@ -1,4 +1,4 @@
-<h1 mat-dialog-title>Editar Culto</h1>
+<h1 mat-dialog-title>{{operation}} Culto</h1>
 <div mat-dialog-content>
 
     <form [formGroup]="form" (submit)="updateCultoData($event)">
@@ -34,7 +34,7 @@
                 <mat-error *ngIf="form.controls.capacidade.invalid">Capacidade é obrigatória</mat-error>
             </mat-form-field>
            
-            <button type="submit" mat-raised-button color="primary">Atualizar Dados</button>
+            <button type="submit" mat-raised-button color="primary">{{operation}} Culto</button>
 
         </div>
 
