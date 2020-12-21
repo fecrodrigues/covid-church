@@ -50,10 +50,33 @@ export class EditInstituicaoModalComponent implements OnInit {
     
     if(this.form.valid) {
 
+      let formValues = this.form.getRawValue();
       if(this.data) {
 
+        this.apiCaller.atualizarInstituicao(formValues.id, formValues).subscribe(
+          response => {
+            this.dialogRef.close('success');
+
+            Swal.fire(
+              'Sucesso!',
+              'Instituição atualizada com sucesso!',
+              'success'
+            )
+          }, 
+          error => {
+
+            Swal.fire(
+              'Ops!',
+              'Não foi possivel atualizar a instituição!',
+              'error'
+            )
+
+          }
+        )
+        
+
       } else {
-        this.apiCaller.inserirInstituicao(this.form.getRawValue()).subscribe(
+        this.apiCaller.inserirInstituicao(formValues).subscribe(
           response => {
             this.dialogRef.close('success');
 
