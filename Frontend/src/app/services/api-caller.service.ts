@@ -49,6 +49,12 @@ export class ApiCallerService {
     return this.httpClient.delete(this.baseUrl + '/instituicao/' + idInstituicao);
   }
 
+  atualizarInstituicao(idInstituicao: String, novaInfoInstituicao: any): Observable<any> {
+    novaInfoInstituicao.idUsuario = this.cpf;
+    delete novaInfoInstituicao.id;
+    return this.httpClient.patch(this.baseUrl + '/instituicao/' + idInstituicao, novaInfoInstituicao);
+  }
+
   carregarListadeCultosPorInstituicao(idInstituicao: String): Observable<any> {
     console.log(idInstituicao, 'id')
     return this.httpClient.get("assets/jsonExamples.json");
