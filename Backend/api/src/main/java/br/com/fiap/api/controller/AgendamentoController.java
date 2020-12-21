@@ -56,5 +56,15 @@ public class AgendamentoController {
         return ResponseEntity.status(HttpStatus.OK).body(countReturn);
     }
 
-    //@GetMapping("/agendamento/{id}")
+    @DeleteMapping("/agendamento/culto/{idCulto}/usuario/{idUsuario}")
+    public ResponseEntity<Void> delAgendamento(@PathVariable String idCulto, String idUsuario) {
+    AgendamentoModel agendamento = agendamentoRepository.findByIdCultoAndIdPessoa(idCulto, idUsuario);
+        if (agendamento != null) {
+            agendamentoRepository.deleteById(agendamento.getId());
+            return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+        } else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
+    }
+
 }

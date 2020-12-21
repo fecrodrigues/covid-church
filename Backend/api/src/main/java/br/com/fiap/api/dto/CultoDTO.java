@@ -25,4 +25,7 @@ public class CultoDTO {
         this.capacidade = model.getCapacidade();
         this.vagas = vagas;
     }
+
+
+
 }
