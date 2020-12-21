@@ -41,6 +41,11 @@ public class AgendamentoController {
         return agendamentoRepository.findByIdCulto(idCulto);
     }
 
+    @GetMapping("/agendamentos/{idUsuario}")
+    public List<AgendamentoModel> getAgendamentoByIdPessoa(@PathVariable String idPessoa) {
+        return agendamentoRepository.findByIdPessoa(idPessoa);
+    }
+
     @GetMapping("/agendamentos/{idCulto}/count")
     public ResponseEntity<AgendamentoCountDTO> getCount(@PathVariable String idCulto) {
         List<AgendamentoModel> dbAgendamentos = agendamentoRepository.findByIdCulto(idCulto);
