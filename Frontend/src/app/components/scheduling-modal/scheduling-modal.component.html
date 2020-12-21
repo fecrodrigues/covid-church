@@ -48,6 +48,8 @@
           <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
         </table>
       
+        <div style="padding: 17px; text-align: center;" *ngIf="dataSourceCult.data.length === 0">Instituição não possui cultos cadastrados</div>
+
         <mat-paginator [pageSizeOptions]="[7, 14, 21]" showFirstLastButtons></mat-paginator>
     </div>
  

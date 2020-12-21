@@ -31,10 +31,13 @@ export class SchedulingModalComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) public data: any) {}
 
   ngOnInit(): void {
-    this.apiCaller.carregarListadeCultosPorInstituicao(this.data.id).subscribe(response => {
-      console.log(response, 'response')
-      this.dataSourceCult.data = response.cultos;
-    })
+    this.apiCaller.carregarListadeCultosPorInstituicao(this.data.id).subscribe(
+      response => {
+        this.dataSourceCult.data = response.cultos;
+      },
+      error => {
+        this.dataSourceCult.data = [];
+      })
 
   }
 

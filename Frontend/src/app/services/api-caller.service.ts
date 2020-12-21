@@ -57,12 +57,15 @@ export class ApiCallerService {
 
   carregarListadeCultosPorInstituicao(idInstituicao: String): Observable<any> {
     console.log(idInstituicao, 'id')
-    return this.httpClient.get("assets/jsonExamples.json");
+    return this.httpClient.get(this.baseUrl + '/cultos/' + idInstituicao);
+  }
+
+  inserirCulto(idInstituicao: String, infoCulto: any) {
+    return this.httpClient.post(this.baseUrl + '/culto', infoCulto);
   }
 
   carregarListadeAgendamentosPorUsuario(cpf: String): Observable<any> {
-    console.log(cpf, 'cpf')
-    return this.httpClient.get("assets/jsonExamples.json");
+    return this.httpClient.get(this.baseUrl + '/agendamentos/' + this.cpf);
   }
 
 }

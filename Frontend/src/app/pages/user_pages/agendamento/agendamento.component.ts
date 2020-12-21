@@ -30,7 +30,7 @@ export class AgendamentoComponent implements AfterViewInit {
   ngOnInit(): void {
     this.apiCaller.carregarListadeAgendamentosPorUsuario(this.cpf).subscribe(response => {
       console.log(response, 'response')
-      this.dataSource.data = response.agendamentos;
+      this.dataSource.data = response;
     })
 
   }
