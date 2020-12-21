@@ -57,7 +57,7 @@ public class AgendamentoController {
     }
 
     @DeleteMapping("/agendamento/culto/{idCulto}/usuario/{idUsuario}")
-    public ResponseEntity<Void> delAgendamento(@PathVariable String idCulto, String idUsuario) {
+    public ResponseEntity<Void> delAgendamento(@PathVariable("idCulto") String idCulto, @PathVariable("idUsuario") String idUsuario) {
     AgendamentoModel dbAgendamento = agendamentoRepository.findByIdCultoAndIdPessoa(idCulto, idUsuario);
 
         if (dbAgendamento != null) {

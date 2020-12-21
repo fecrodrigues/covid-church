@@ -38,6 +38,10 @@ public class CultoController {
 
     }
 
+    @GetMapping("/cultos")
+    public List<CultoModel> getCultos() { return cultoRepository.findAll();
+    }
+
     @GetMapping("/cultos/{idInstituicao}")
     public List<CultoModel> getCultoByIdInstituicao(@PathVariable String idInstituicao) {
         return cultoRepository.findByIdInstituicao(idInstituicao);
@@ -62,9 +66,18 @@ public class CultoController {
 
     }
 
-/*    @DeleteMapping("/culto/{idCulto}")
+    @DeleteMapping("/culto/{idCulto}")
     public ResponseEntity<Void> delCulto(@PathVariable String idCulto) {
-        CultoModel
-    }*/
+        Optional<CultoModel> dbCulto = cultoRepository.findById(idCulto);
+
+        if (dbCulto != null) {
+            cultoRepository.deleteById(idCulto);
+            return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+        } else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
+    }
+
+
 
 }
