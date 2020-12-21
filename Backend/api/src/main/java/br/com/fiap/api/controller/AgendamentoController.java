@@ -1,8 +1,12 @@
 package br.com.fiap.api.controller;
 
 import br.com.fiap.api.dto.AgendamentoCountDTO;
+import br.com.fiap.api.dto.AgendamentoDTO;
 import br.com.fiap.api.model.AgendamentoModel;
+import br.com.fiap.api.model.CultoModel;
 import br.com.fiap.api.repository.AgendamentoRepository;
+import br.com.fiap.api.repository.AgendamentoRepositoryDTO;
+import br.com.fiap.api.repository.CultoRepository;
 import br.com.fiap.api.utils.FindAgendamento;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -10,6 +14,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @CrossOrigin
@@ -18,16 +23,31 @@ public class AgendamentoController {
     private AgendamentoModel agendamentoModel;
 
     @Autowired
+    private CultoModel cultoModel;
+
+    @Autowired
     private AgendamentoRepository agendamentoRepository;
 
+    @Autowired
+    private AgendamentoRepositoryDTO agendamentoRepositoryDTO;
+
+    @Autowired
+    private CultoRepository cultoRepository;
+
     @PostMapping("/agendamento")
-    public ResponseEntity<AgendamentoModel> addAgendamento(@RequestBody AgendamentoModel agendamento){
+    public ResponseEntity<AgendamentoDTO> addAgendamento(@RequestBody AgendamentoModel agendamento){
 
         List<AgendamentoModel> dbAgendamento = agendamentoRepository.findByIdPessoa(agendamento.getIdPessoa());
         Boolean confere = new FindAgendamento().findAgendamento(agendamento.getIdCulto(), dbAgendamento);
         if (!confere) {
-            agendamentoModel = agendamentoRepository.save(agendamento);
-            return ResponseEntity.status(HttpStatus.CREATED).body(agendamentoModel);
+            Optional<CultoModel> dbCulto = cultoRepository.findById(agendamento.getIdCulto());
+            System.out.println(dbCulto.get().getCapacidade().toString());
+            AgendamentoDTO agendamentoDTO = new AgendamentoDTO(agendamento);
+            agendamentoDTO.setDescricao(dbCulto.get().getDescricao());
+            agendamentoDTO.setData(dbCulto.get().getData());
+
+            agendamentoDTO = agendamentoRepositoryDTO.save(agendamentoDTO);
+            return ResponseEntity.status(HttpStatus.CREATED).body(agendamentoDTO);
         } else {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }
@@ -42,8 +62,8 @@ public class AgendamentoController {
     }
 
     @GetMapping("/agendamentos/usuario/{idUsuario}")
-    public List<AgendamentoModel> getAgendamentoByIdPessoa(@PathVariable String idUsuario) {
-        return agendamentoRepository.findByIdPessoa(idUsuario);
+    public List<AgendamentoDTO> getAgendamentoByIdPessoa(@PathVariable String idUsuario) {
+        return agendamentoRepositoryDTO.findByIdPessoa(idUsuario);
     }
 
     @GetMapping("/agendamentos/{idCulto}/count")

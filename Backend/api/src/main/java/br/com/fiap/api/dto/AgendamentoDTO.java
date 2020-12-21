@@ -1,32 +1,33 @@
-package br.com.fiap.api.model;
+package br.com.fiap.api.dto;
 
-import org.bson.types.ObjectId;
+import br.com.fiap.api.model.AgendamentoModel;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.stereotype.Repository;
 
-import java.time.LocalDateTime;
 import java.util.Date;
 
 @Repository
 @Document(collection = "Agendamento")
-public class AgendamentoModel {
+public class AgendamentoDTO {
 
     @Id
     private String id;
     private String idCulto;
     private String idPessoa;
     private Date dataAgendamento;
+    private String descricao;
+    private Date data;
 
-    public AgendamentoModel(String id, String idCulto, String idPessoa, Date data, Date dataAgendamento){
-        this.id = id;
-        this.idCulto = idCulto;
-        this.idPessoa = idPessoa;
-        this.dataAgendamento = dataAgendamento;
-    }
+    public AgendamentoDTO() { }
 
-    public AgendamentoModel(){
-
+    public AgendamentoDTO(AgendamentoModel model) {
+        this.id = model.getId();
+        this.idCulto = model.getIdCulto();
+        this.idPessoa = model.getIdPessoa();
+        this.dataAgendamento = model.getDataAgendamento();
+        this.descricao = descricao;
+        this.data = data;
     }
 
     public String getId() {
@@ -59,5 +60,21 @@ public class AgendamentoModel {
 
     public void setDataAgendamento(Date dataAgendamento) {
         this.dataAgendamento = dataAgendamento;
+    }
+
+    public String getDescricao() {
+        return descricao;
+    }
+
+    public void setDescricao(String descricao) {
+        this.descricao = descricao;
+    }
+
+    public Date getData() {
+        return data;
+    }
+
+    public void setData(Date data) {
+        this.data = data;
     }
 }
