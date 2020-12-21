@@ -62,4 +62,9 @@ public class CultoController {
 
     }
 
+/*    @DeleteMapping("/culto/{idCulto}")
+    public ResponseEntity<Void> delCulto(@PathVariable String idCulto) {
+        CultoModel
+    }*/
+
 }
