@@ -13,6 +13,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
+@CrossOrigin
 public class InstituicaoController {
 
     @Autowired
@@ -38,7 +39,7 @@ public class InstituicaoController {
     @GetMapping("/instituicoes")
     public List<InstituicaoModel> getInstituicoes(){ return instituicaoRepository.findAll(); }
 
-    @GetMapping("/instituicao/usuario/{idUsuario}")
+    @GetMapping("/instituicoes/usuario/{idUsuario}")
     public List<InstituicaoModel> getInstituicaoByIdUsuario(@PathVariable String idUsuario) {
         return instituicaoRepository.findByIdUsuario(idUsuario);
     }
