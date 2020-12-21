@@ -16,7 +16,7 @@ export class SchedulingModalComponent implements OnInit {
 
   selectedRowIndex: Number | undefined;
 
-  displayedColumns: string[] = ['descricao', 'data', 'duracao', 'capacidade', 'buttons'];
+  displayedColumns: string[] = ['descricao', 'data', 'duracao', 'capacidade', 'vagas', 'buttons'];
   dataSourceCult: MatTableDataSource<any> = new MatTableDataSource<any>();
 
   @ViewChild(MatPaginator) paginator: MatPaginator | undefined;
