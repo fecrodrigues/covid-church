@@ -64,6 +64,10 @@ export class ApiCallerService {
     return this.httpClient.post(this.baseUrl + '/culto', infoCulto);
   }
 
+  editarCulto(idCulto: String, infoAtualizadaCulto: any) {
+    return this.httpClient.patch(this.baseUrl + '/culto/' + idCulto, infoAtualizadaCulto);
+  }
+
   carregarListadeAgendamentosPorUsuario(cpf: String): Observable<any> {
     return this.httpClient.get(this.baseUrl + '/agendamentos/' + this.cpf);
   }

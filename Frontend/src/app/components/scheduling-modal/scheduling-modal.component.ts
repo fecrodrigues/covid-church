@@ -33,12 +33,17 @@ export class SchedulingModalComponent implements OnInit {
   ngOnInit(): void {
     this.apiCaller.carregarListadeCultosPorInstituicao(this.data.id).subscribe(
       response => {
-        this.dataSourceCult.data = response.cultos;
+        this.dataSourceCult.data = response;
       },
       error => {
         this.dataSourceCult.data = [];
       })
 
+  }
+
+  formatarDataParaExibicao(backendData: String) {
+    let data = backendData.split('T')[0];
+    return data.substring(8, 10) + '/' + data.substring(5,7) + '/' + data.substring(0,4) + ' ' + backendData.substring(11, 19);
   }
 
   scheduleItem(row: any) {

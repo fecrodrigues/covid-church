@@ -38,7 +38,7 @@ export class EditCultoModalComponent implements OnInit {
       this.operation = 'Atualizar';
       this.form.controls['id'].setValue(this.data.id);
       this.form.controls['idInstituicao'].setValue(this.data.idInstituicao);
-      this.form.controls['data'].setValue(this.data.data);
+      this.form.controls['data'].setValue(this.formatarDataParaExibicaoEdicao(this.data.data));
       this.form.controls['descricao'].setValue(this.data.descricao);
       this.form.controls['duracao'].setValue(this.data.duracao);
       this.form.controls['capacidade'].setValue(this.data.capacidade);
@@ -57,6 +57,11 @@ export class EditCultoModalComponent implements OnInit {
     return data.substring(8, 10) + '' + data.substring(5,7) + '' + data.substring(0,4) + ' ' + backendData.substr(11, 19);
   }
 
+  formatarDataParaExibicaoEdicao(formatedData: String) {
+    let data = formatedData.split('T')[0];
+    return data.substring(8, 10) + '' + data.substring(5,7) + '' + data.substring(0,4) + '' + formatedData.substring(11, 19).replace(/:/g, '');
+  }
+
   formatDateToSend(date: String) {
     return date.substring(4, 8) + '-' + date.substring(2,4) + '-' + date.substring(0,2) + 'T' + date.substring(8,10) + ":" + date.substring(10,12) + ":" + date.substring(12,14);
   }
@@ -71,7 +76,26 @@ export class EditCultoModalComponent implements OnInit {
 
       if(this.data.id) {
         //edita
-        console.log(formValues, 'edita')
+        this.apiCaller.editarCulto(formValues.id, formValues).subscribe(
+          response => {
+            this.dialogRef.close('success');
+
+            Swal.fire(
+              'Tudo Certo!',
+              'Culto atualizado com sucesso!',
+              'success'
+            )
+          },
+          error => {
+            Swal.fire(
+              'Ops!',
+              'Não foi possivel atualizar o culto!',
+              'error'
+            )
+          }
+        )
+
+
       } else {
         //criar
         this.apiCaller.inserirCulto(formValues.idInstituicao, formValues).subscribe(
