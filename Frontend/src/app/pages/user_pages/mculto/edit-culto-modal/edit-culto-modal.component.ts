@@ -1,8 +1,11 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { subscribeOn } from 'rxjs/operators';
 import { SchedulingModalComponent } from 'src/app/components/scheduling-modal/scheduling-modal.component';
 import { ApiCallerService } from 'src/app/services/api-caller.service';
+
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-edit-culto-modal',
@@ -35,7 +38,7 @@ export class EditCultoModalComponent implements OnInit {
       this.operation = 'Atualizar';
       this.form.controls['id'].setValue(this.data.id);
       this.form.controls['idInstituicao'].setValue(this.data.idInstituicao);
-      this.form.controls['data'].setValue(this.data.data);
+      this.form.controls['data'].setValue(this.formatarDataParaExibicaoEdicao(this.data.data));
       this.form.controls['descricao'].setValue(this.data.descricao);
       this.form.controls['duracao'].setValue(this.data.duracao);
       this.form.controls['capacidade'].setValue(this.data.capacidade);
@@ -49,18 +52,65 @@ export class EditCultoModalComponent implements OnInit {
     this.dialogRef.close();
   }
 
+  formatarDataParaExibicaoEdicao(formatedData: String) {
+    let data = formatedData.split('T')[0];
+    return data.substring(8, 10) + '' + data.substring(5,7) + '' + data.substring(0,4) + '' + formatedData.substring(11, 19).replace(/:/g, '');
+  }
+
+  formatDateToSend(date: String) {
+    return date.substring(4, 8) + '-' + date.substring(2,4) + '-' + date.substring(0,2) + 'T' + date.substring(8,10) + ":" + date.substring(10,12) + ":" + date.substring(12,14);
+  }
+
   updateCultoData(event: any) {
     event.preventDefault();
 
     if(this.form.valid) {
 
       let formValues = this.form.getRawValue();
+      formValues.data = this.formatDateToSend(formValues.data);
+
       if(this.data.id) {
         //edita
-        console.log(formValues, 'edita')
+        this.apiCaller.editarCulto(formValues.id, formValues).subscribe(
+          response => {
+            this.dialogRef.close('success');
+
+            Swal.fire(
+              'Tudo Certo!',
+              'Culto atualizado com sucesso!',
+              'success'
+            )
+          },
+          error => {
+            Swal.fire(
+              'Ops!',
+              'Não foi possivel atualizar o culto!',
+              'error'
+            )
+          }
+        )
+
+
       } else {
         //criar
-        console.log(formValues, 'cria')
+        this.apiCaller.inserirCulto(formValues.idInstituicao, formValues).subscribe(
+          response => {
+            this.dialogRef.close('success');
+
+            Swal.fire(
+              'Tudo Certo!',
+              'Culto cadastrado com sucesso!',
+              'success'
+            )
+          },
+          error => {
+            Swal.fire(
+              'Ops!',
+              'Não foi possivel cadastrar o culto!',
+              'error'
+            )
+          }
+        )
       }
     }
   }

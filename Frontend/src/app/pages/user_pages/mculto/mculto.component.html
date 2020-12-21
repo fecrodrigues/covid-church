@@ -3,7 +3,7 @@
 
 <mat-form-field appearance="fill">
   <mat-label>Instituição</mat-label>
-  <select (change)="carregarListaDeCultos($event)" matNativeControl required>
+  <select (change)="carregarListaDeCultos($event)" matNativeControl [disabled]="!instituicaoSelecionada">
     <option *ngFor="let instituicao of instituicoes" [value]="instituicao.id">{{ instituicao.nome }}</option>
   </select>
 </mat-form-field>
@@ -24,7 +24,7 @@
     <!-- Name Column -->
     <ng-container matColumnDef="data">
       <th mat-header-cell *matHeaderCellDef> Data </th>
-      <td mat-cell *matCellDef="let element"> {{element.data}} </td>
+      <td mat-cell *matCellDef="let element"> {{ formatarDataParaExibicao(element.data) }} </td>
     </ng-container>
 
     <!-- Weight Column -->
@@ -51,7 +51,7 @@
     <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
   </table>
 
-  <div style="padding: 17px; text-align: center;" *ngIf="dataSourceCult.data.length === 0">Você não possui cultos cadastradas</div>
+  <div style="padding: 17px; text-align: center;" *ngIf="dataSourceCult.data.length === 0">Instituição não possui cultos cadastrados</div>
 
   <mat-paginator [pageSizeOptions]="[7, 14, 21]" showFirstLastButtons></mat-paginator>
 </div>

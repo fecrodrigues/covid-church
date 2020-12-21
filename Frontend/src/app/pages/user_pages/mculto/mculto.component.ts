@@ -52,13 +52,18 @@ export class McultoComponent implements AfterViewInit {
     )
   }
 
+  formatarDataParaExibicao(backendData: String) {
+    let data = backendData.split('T')[0];
+    return data.substring(8, 10) + '/' + data.substring(5,7) + '/' + data.substring(0,4) + ' ' + backendData.substring(11, 19);
+  }
+
   carregarListaDeCultos(event: any) {
     const instituicao = event.target.value;
     this.instituicaoSelecionada = instituicao;
 
     this.apiCaller.carregarListadeCultosPorInstituicao(instituicao).subscribe(
       response => {
-        this.dataSourceCult.data = response.cultos;
+        this.dataSourceCult.data = response;
       }, 
       error => {
         this.dataSourceCult.data = [];
@@ -67,7 +72,8 @@ export class McultoComponent implements AfterViewInit {
   }
 
   deleteCulto(row: any) {
-    
+    console.log(row, 'entrou')
+
     Swal.fire({
       title: 'Você tem certeza?',
       text: "Você não podera voltar atrás",
@@ -79,23 +85,41 @@ export class McultoComponent implements AfterViewInit {
     }).then((result) => {
       
       if (result.isConfirmed) {
-        Swal.fire(
-          'Feito!',
-          'O Culto foi excluido com sucesso.',
-          'success'
+        
+        this.apiCaller.excluirCulto(row.id).subscribe(
+          response => {
+            Swal.fire(
+              'Feito!',
+              'O Culto foi excluido com sucesso.',
+              'success'
+            )
+          }, 
+          error => {
+            Swal.fire(
+              'Ops!',
+              'Não foi possível excluir o culto.',
+              'error'
+            )
+          }
         )
       }
 
     })
+  
   }
 
   openEditModal(row?: any) {
     !row? row = { idInstituicao: this.instituicaoSelecionada }: row;
 
-    console.log(this.instituicaoSelecionada, 'hue')
-    this.modal.open(EditCultoModalComponent, {
+    let modalDialog = this.modal.open(EditCultoModalComponent, {
       data: row
     });
+
+    modalDialog.afterClosed().subscribe(response => {
+      if(response === 'success') {
+        this.carregarListaDeCultos({ target: { value: this.instituicaoSelecionada } })
+      }
+    })
   }
   
 }

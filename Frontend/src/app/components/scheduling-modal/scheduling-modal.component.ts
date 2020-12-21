@@ -31,11 +31,19 @@ export class SchedulingModalComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) public data: any) {}
 
   ngOnInit(): void {
-    this.apiCaller.carregarListadeCultosPorInstituicao(this.data.id).subscribe(response => {
-      console.log(response, 'response')
-      this.dataSourceCult.data = response.cultos;
-    })
+    this.apiCaller.carregarListadeCultosPorInstituicao(this.data.id).subscribe(
+      response => {
+        this.dataSourceCult.data = response;
+      },
+      error => {
+        this.dataSourceCult.data = [];
+      })
 
+  }
+
+  formatarDataParaExibicao(backendData: String) {
+    let data = backendData.split('T')[0];
+    return data.substring(8, 10) + '/' + data.substring(5,7) + '/' + data.substring(0,4) + ' ' + backendData.substring(11, 19);
   }
 
   scheduleItem(row: any) {
@@ -44,7 +52,7 @@ export class SchedulingModalComponent implements OnInit {
       title: 'Confirmar agendamento?',
       html: `
         <p>${row.descricao}</p>
-        <p>${row.data}</p>
+        <p>${this.formatarDataParaExibicao(row.data)}</p>
       `,
       icon: 'warning',
       showCancelButton: true,
@@ -52,15 +60,31 @@ export class SchedulingModalComponent implements OnInit {
       cancelButtonText: 'Cancelar',
       reverseButtons: false
     }).then((result) => {
-      
       if (result.isConfirmed) {
-        Swal.fire(
-          'Feito!',
-          'Agendamento realizado.',
-          'success'
+
+        let infoAgendamento = {
+          idCulto: row.id,
+          dataAgendamento: new Date()
+        }
+
+        this.apiCaller.inserirAgendamento(infoAgendamento).subscribe(
+          response => {
+            Swal.fire(
+              'Feito!',
+              'Agendamento realizado.',
+              'success'
+            )
+          }, 
+          error => {
+            Swal.fire(
+              'Ops!',
+              'Você já está cadastrado neste culto.',
+              'error'
+            )
+          }
         )
       }
-
+      
     })
 
   }
