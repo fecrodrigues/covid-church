@@ -8,13 +8,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 
 @RestController
+@CrossOrigin
 public class PessoaController {
 
     @Autowired
@@ -72,21 +72,23 @@ public class PessoaController {
     }
 
     @PatchMapping("/pessoa/{cpf}")
-    public ResponseEntity<Void> putPessoa(@PathVariable String cpf, @RequestBody PessoaPartialUpdateDTO pessoaPartialUpdateDTO) {
+    public ResponseEntity<Void> pathPessoa(@PathVariable String cpf, @RequestBody PessoaPartialUpdateDTO pessoaPartialUpdateDTO) {
         Optional<PessoaModel> dbPessoaModel = pessoaRepository.findById(cpf);
         if (!dbPessoaModel.isPresent()) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
-        }
-        PessoaModel pessoaModelToEdit = dbPessoaModel.get();
-        JsonNullableUtils.changeIfPresent(pessoaPartialUpdateDTO.getNome(), pessoaModelToEdit::setNome);
-        JsonNullableUtils.changeIfPresent(pessoaPartialUpdateDTO.getSobrenome(), pessoaModelToEdit::setSobrenome);
-        JsonNullableUtils.changeIfPresent(pessoaPartialUpdateDTO.getDataNascimento(), pessoaModelToEdit::setDataNascimento);
-        JsonNullableUtils.changeIfPresent(pessoaPartialUpdateDTO.getIdade(), pessoaModelToEdit::setIdade);
-        JsonNullableUtils.changeIfPresent(pessoaPartialUpdateDTO.getUserName(), pessoaModelToEdit::setUserName);
-        JsonNullableUtils.changeIfPresent(pessoaPartialUpdateDTO.getPassword(), pessoaModelToEdit::setPassword);
+        } else {
+            PessoaModel pessoaModelToEdit = dbPessoaModel.get();
+            JsonNullableUtils.changeIfPresent(pessoaPartialUpdateDTO.getNome(), pessoaModelToEdit::setNome);
+            JsonNullableUtils.changeIfPresent(pessoaPartialUpdateDTO.getSobrenome(), pessoaModelToEdit::setSobrenome);
+            JsonNullableUtils.changeIfPresent(pessoaPartialUpdateDTO.getDataNascimento(), pessoaModelToEdit::setDataNascimento);
+            JsonNullableUtils.changeIfPresent(pessoaPartialUpdateDTO.getIdade(), pessoaModelToEdit::setIdade);
+            JsonNullableUtils.changeIfPresent(pessoaPartialUpdateDTO.getUserName(), pessoaModelToEdit::setUserName);
+            JsonNullableUtils.changeIfPresent(pessoaPartialUpdateDTO.getPassword(), pessoaModelToEdit::setPassword);
 
-        pessoaRepository.save(pessoaModelToEdit);
-        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+            pessoaRepository.save(pessoaModelToEdit);
+            return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+
+        }
 
     }
 

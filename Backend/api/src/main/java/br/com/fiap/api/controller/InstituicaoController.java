@@ -1,9 +1,11 @@
 package br.com.fiap.api.controller;
 
+import br.com.fiap.api.dto.InstituicaoPartialUpdateDTO;
 import br.com.fiap.api.model.InstituicaoModel;
 import br.com.fiap.api.model.PessoaModel;
 import br.com.fiap.api.repository.InstituicaoRepository;
 import br.com.fiap.api.repository.PessoaRepository;
+import br.com.fiap.api.utils.JsonNullableUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -13,6 +15,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
+@CrossOrigin
 public class InstituicaoController {
 
     @Autowired
@@ -38,9 +41,27 @@ public class InstituicaoController {
     @GetMapping("/instituicoes")
     public List<InstituicaoModel> getInstituicoes(){ return instituicaoRepository.findAll(); }
 
-    @GetMapping("/instituicao/usuario/{idUsuario}")
+    @GetMapping("/instituicoes/usuario/{idUsuario}")
     public List<InstituicaoModel> getInstituicaoByIdUsuario(@PathVariable String idUsuario) {
         return instituicaoRepository.findByIdUsuario(idUsuario);
+    }
+
+    @PatchMapping("/instituicao/{id}")
+    public ResponseEntity<Void> pathInstituicao(@PathVariable String id, @RequestBody InstituicaoPartialUpdateDTO instituicaoPartialUpdateDTO) {
+        Optional<InstituicaoModel> dbInstituicaoModel = instituicaoRepository.findById(id);
+        if (!dbInstituicaoModel.isPresent()) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        } else {
+            InstituicaoModel instituicaoModelToEdit = dbInstituicaoModel.get();
+            JsonNullableUtils.changeIfPresent(instituicaoPartialUpdateDTO.getIdUsuario(), instituicaoModelToEdit::setIdUsuario);
+            JsonNullableUtils.changeIfPresent(instituicaoPartialUpdateDTO.getNome(), instituicaoModelToEdit::setNome);
+            JsonNullableUtils.changeIfPresent(instituicaoPartialUpdateDTO.getEndereco(), instituicaoModelToEdit::setEndereco);
+            JsonNullableUtils.changeIfPresent(instituicaoPartialUpdateDTO.getCapacidade(), instituicaoModelToEdit::setCapacidade);
+
+            instituicaoRepository.save(instituicaoModelToEdit);
+            return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+        }
+
     }
 
     @DeleteMapping("/instituicao/{id}")

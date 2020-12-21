@@ -1,5 +1,6 @@
 package br.com.fiap.api.model;
 
+import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.stereotype.Repository;
 
@@ -9,6 +10,7 @@ import java.util.Date;
 @Document(collection = "Culto")
 public class CultoModel {
 
+    @Id
     private String id;
     private String idInstituicao;
     private String descricao;
