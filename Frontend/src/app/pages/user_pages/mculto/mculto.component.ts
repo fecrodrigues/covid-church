@@ -72,7 +72,8 @@ export class McultoComponent implements AfterViewInit {
   }
 
   deleteCulto(row: any) {
-    
+    console.log(row, 'entrou')
+
     Swal.fire({
       title: 'Você tem certeza?',
       text: "Você não podera voltar atrás",
@@ -84,14 +85,27 @@ export class McultoComponent implements AfterViewInit {
     }).then((result) => {
       
       if (result.isConfirmed) {
-        Swal.fire(
-          'Feito!',
-          'O Culto foi excluido com sucesso.',
-          'success'
+        
+        this.apiCaller.excluirCulto(row.id).subscribe(
+          response => {
+            Swal.fire(
+              'Feito!',
+              'O Culto foi excluido com sucesso.',
+              'success'
+            )
+          }, 
+          error => {
+            Swal.fire(
+              'Ops!',
+              'Não foi possível excluir o culto.',
+              'error'
+            )
+          }
         )
       }
 
     })
+  
   }
 
   openEditModal(row?: any) {

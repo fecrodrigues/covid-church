@@ -52,7 +52,7 @@ export class SchedulingModalComponent implements OnInit {
       title: 'Confirmar agendamento?',
       html: `
         <p>${row.descricao}</p>
-        <p>${row.data}</p>
+        <p>${this.formatarDataParaExibicao(row.data)}</p>
       `,
       icon: 'warning',
       showCancelButton: true,
@@ -60,15 +60,31 @@ export class SchedulingModalComponent implements OnInit {
       cancelButtonText: 'Cancelar',
       reverseButtons: false
     }).then((result) => {
-      
       if (result.isConfirmed) {
-        Swal.fire(
-          'Feito!',
-          'Agendamento realizado.',
-          'success'
+
+        let infoAgendamento = {
+          idCulto: row.id,
+          dataAgendamento: new Date()
+        }
+
+        this.apiCaller.inserirAgendamento(infoAgendamento).subscribe(
+          response => {
+            Swal.fire(
+              'Feito!',
+              'Agendamento realizado.',
+              'success'
+            )
+          }, 
+          error => {
+            Swal.fire(
+              'Ops!',
+              'Você já está cadastrado neste culto.',
+              'error'
+            )
+          }
         )
       }
-
+      
     })
 
   }

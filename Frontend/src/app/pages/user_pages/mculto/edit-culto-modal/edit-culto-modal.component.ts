@@ -52,11 +52,6 @@ export class EditCultoModalComponent implements OnInit {
     this.dialogRef.close();
   }
 
-  formatarDataParaExibicao(backendData: String) {
-    let data = backendData.split('T')[0];
-    return data.substring(8, 10) + '' + data.substring(5,7) + '' + data.substring(0,4) + ' ' + backendData.substr(11, 19);
-  }
-
   formatarDataParaExibicaoEdicao(formatedData: String) {
     let data = formatedData.split('T')[0];
     return data.substring(8, 10) + '' + data.substring(5,7) + '' + data.substring(0,4) + '' + formatedData.substring(11, 19).replace(/:/g, '');

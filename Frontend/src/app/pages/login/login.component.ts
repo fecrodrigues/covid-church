@@ -1,6 +1,9 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 
+import { ApiCallerService } from './../../services/api-caller.service';
+import Swal from 'sweetalert2';
+
 import { Router } from '@angular/router';
 
 @Component({
@@ -14,11 +17,11 @@ export class LoginComponent implements OnInit {
   @Output() submitEM = new EventEmitter();
 
   form: FormGroup = new FormGroup({
-    login: new FormControl('', [Validators.required]),
-    senha: new FormControl('', [Validators.required]),
+    userName: new FormControl('', [Validators.required]),
+    password: new FormControl('', [Validators.required]),
   });
 
-  constructor(private router: Router) { }
+  constructor(private router: Router, private apiCaller: ApiCallerService) { }
 
   ngOnInit(): void {
   }
@@ -27,8 +30,23 @@ export class LoginComponent implements OnInit {
     event.preventDefault();
 
     if (this.form.valid) {
+
       localStorage.setItem('token', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJjcGYiOiIxMjM0NTY3ODkxMiJ9.Nckx1yQvv6fbNOPiZKNljKEJX5IPAEmVU_bzErHNBIw');
       this.router.navigate([''])
+
+      /*this.apiCaller.efetuarLogin(this.form.getRawValue()).subscribe(
+        response => {
+          localStorage.setItem('token', (<any>response).token);
+          this.router.navigate([''])
+        }, 
+        error => {
+          Swal.fire(
+            'Ops!',
+            'Login e/ou senha incorretos',
+            'error'
+          )
+        }
+      )*/
     }
   }
   

@@ -8,16 +8,16 @@
             
              <mat-form-field appearance="legacy">
                 <mat-label>Login</mat-label>
-                <input type="text" matInput formControlName="login">
-                <mat-error *ngIf="form.controls['login'].hasError('required')">
+                <input type="text" matInput formControlName="userName">
+                <mat-error *ngIf="form.controls['userName'].hasError('required')">
                     Login é <strong>obrigatório</strong>
                 </mat-error>
             </mat-form-field>
             
             <mat-form-field appearance="legacy">
                 <mat-label>Senha</mat-label>
-                <input type="password" matInput formControlName="senha">
-                <mat-error *ngIf="form.controls['senha'].hasError('required')">
+                <input type="password" matInput formControlName="password">
+                <mat-error *ngIf="form.controls['password'].hasError('required')">
                     Senha é <strong>obrigatória</strong>
                 </mat-error>
             </mat-form-field>

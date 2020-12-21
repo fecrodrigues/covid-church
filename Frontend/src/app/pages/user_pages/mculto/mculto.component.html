@@ -3,7 +3,7 @@
 
 <mat-form-field appearance="fill">
   <mat-label>Instituição</mat-label>
-  <select (change)="carregarListaDeCultos($event)" matNativeControl required>
+  <select (change)="carregarListaDeCultos($event)" matNativeControl [disabled]="!instituicaoSelecionada">
     <option *ngFor="let instituicao of instituicoes" [value]="instituicao.id">{{ instituicao.nome }}</option>
   </select>
 </mat-form-field>
