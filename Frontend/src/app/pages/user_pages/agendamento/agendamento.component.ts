@@ -12,8 +12,6 @@ import Swal from 'sweetalert2';
 })
 
 export class AgendamentoComponent implements AfterViewInit {
-
-  cpf = '123435678909';
   
   displayedColumns: string[] = ['nomeCulto', 'dataCulto', 'dataAgendamento', 'buttons'];
   dataSource: MatTableDataSource<any> = new MatTableDataSource<any>();
@@ -28,11 +26,32 @@ export class AgendamentoComponent implements AfterViewInit {
     private apiCaller: ApiCallerService) {}
 
   ngOnInit(): void {
-    this.apiCaller.carregarListadeAgendamentosPorUsuario(this.cpf).subscribe(response => {
-      console.log(response, 'response')
-      this.dataSource.data = response;
-    })
+    this.carregarListaAgendamentos();
 
+  }
+
+  carregarListaAgendamentos() {
+    this.apiCaller.carregarListadeAgendamentosPorUsuario().subscribe(
+      response => {
+        this.dataSource.data = response;
+      },
+      error => {
+        Swal.fire(
+          'Ops!',
+          'Não foi possível carregar a listagem de agendamentos',
+          'error'
+        )
+      }
+    )
+  }
+
+  formatarDataParaExibicao(backendData: String) {
+    if(backendData) {
+      let data = backendData.split('T')[0];
+      return data.substring(8, 10) + '/' + data.substring(5,7) + '/' + data.substring(0,4) + ' ' + backendData.substring(11, 19);
+    } else {
+      return '-';
+    }
   }
 
   cancelSchedule(schedule: any) {
@@ -48,11 +67,24 @@ export class AgendamentoComponent implements AfterViewInit {
     }).then((result) => {
       
       if (result.isConfirmed) {
-        Swal.fire(
-          'Feito!',
-          'O Agendamento foi cancelado com sucesso.',
-          'success'
-        )
+        this.apiCaller.excluirAgendamento(schedule.idCulto).subscribe(
+          response => {
+            Swal.fire(
+              'Feito!',
+              'O Agendamento foi cancelado com sucesso.',
+              'success'
+            ).then(()=> {
+              this.carregarListaAgendamentos()
+            })
+          },
+          error => {
+            Swal.fire(
+              'Ops!',
+              'Não foi possível cancelar o agendamento.',
+              'error'
+            )
+          }
+        ) 
       }
 
     })
