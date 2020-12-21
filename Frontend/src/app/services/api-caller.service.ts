@@ -85,12 +85,12 @@ export class ApiCallerService {
     return this.httpClient.post(this.baseUrl + '/agendamento', infoAgendamento);
   }
 
-  carregarListadeAgendamentosPorUsuario(cpf: String): Observable<any> {
+  carregarListadeAgendamentosPorUsuario(): Observable<any> {
     return this.httpClient.get(this.baseUrl + '/agendamentos/usuario/' + this.cpf);
   }
 
   excluirAgendamento(idCulto: String): Observable<any> {
-    return this.httpClient.delete(this.baseUrl + '/agendamento/culto/' + idCulto + '/pessoa/' + this.cpf);
+    return this.httpClient.delete(this.baseUrl + '/agendamento/culto/' + idCulto + '/usuario/' + this.cpf);
   }
 
 }

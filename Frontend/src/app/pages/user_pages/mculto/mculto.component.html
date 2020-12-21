@@ -3,13 +3,13 @@
 
 <mat-form-field appearance="fill">
   <mat-label>Instituição</mat-label>
-  <select (change)="carregarListaDeCultos($event)" matNativeControl [disabled]="!instituicaoSelecionada">
+  <select (change)="carregarListaDeCultos($event)" matNativeControl>
     <option *ngFor="let instituicao of instituicoes" [value]="instituicao.id">{{ instituicao.nome }}</option>
   </select>
 </mat-form-field>
 
 <div style="padding: 10px; text-align: right;">
-  <button mat-raised-button (click)="openEditModal()">Novo Culto</button>
+  <button mat-raised-button (click)="openEditModal()" [disabled]="!instituicaoSelecionada">Novo Culto</button>
 </div>
 
 <div class="mat-elevation-z3">

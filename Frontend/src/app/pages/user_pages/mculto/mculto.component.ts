@@ -72,7 +72,7 @@ export class McultoComponent implements AfterViewInit {
   }
 
   deleteCulto(row: any) {
-    console.log(row, 'entrou')
+    let classContext = this;
 
     Swal.fire({
       title: 'Você tem certeza?',
@@ -92,7 +92,9 @@ export class McultoComponent implements AfterViewInit {
               'Feito!',
               'O Culto foi excluido com sucesso.',
               'success'
-            )
+            ).then(() => {
+              this.carregarListaDeCultos({ target: { value: classContext.instituicaoSelecionada } })
+            })
           }, 
           error => {
             Swal.fire(
