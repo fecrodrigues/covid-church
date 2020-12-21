@@ -13,7 +13,7 @@ import Swal from 'sweetalert2';
 
 export class AgendamentoComponent implements AfterViewInit {
   
-  displayedColumns: string[] = ['nomeCulto', 'dataCulto', 'dataAgendamento', 'buttons'];
+  displayedColumns: string[] = ['descricao', 'data', 'dataAgendamento', 'buttons'];
   dataSource: MatTableDataSource<any> = new MatTableDataSource<any>();
 
   @ViewChild(MatPaginator) paginator: MatPaginator | undefined;
