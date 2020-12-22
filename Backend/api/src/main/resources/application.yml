@@ -3,5 +3,5 @@ server:
 spring:
   data:
     mongodb:
-      uri: mongodb+srv://covid-church_devuser:eWfjNw09Pf69lEj6@cluster0.vvh2x.mongodb.net/<dbname>?retryWrites=true&w=majority
+      uri: 
       database: Church
