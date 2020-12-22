@@ -1,15 +1,16 @@
 package br.com.fiap.api.controller;
 
+import br.com.fiap.api.dto.CultoDTO;
 import br.com.fiap.api.dto.CultoPartialUpdateDTO;
 import br.com.fiap.api.model.CultoModel;
 import br.com.fiap.api.repository.CultoRepository;
+import br.com.fiap.api.repository.CultoRepositoryDTO;
 import br.com.fiap.api.repository.InstituicaoRepository;
 import br.com.fiap.api.utils.JsonNullableUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
 import java.util.Optional;
 
@@ -23,15 +24,21 @@ public class CultoController {
     private CultoRepository cultoRepository;
 
     @Autowired
+    private CultoRepositoryDTO cultoRepositoryDTO;
+
+    @Autowired
     private InstituicaoRepository instituicaoRepository;
 
     @PostMapping("/culto")
-    public ResponseEntity<CultoModel> addCulto(@RequestBody CultoModel culto) {
+    public ResponseEntity<CultoDTO> addCulto(@RequestBody CultoModel culto) {
         CultoModel dbCulto = cultoRepository.findByIdInstituicaoAndData(culto.getIdInstituicao(), culto.getData());
 
         if (dbCulto == null) {
-            cultoModel = cultoRepository.save(culto);
-            return ResponseEntity.status(HttpStatus.CREATED).body(cultoModel);
+            CultoDTO novoCulto = new CultoDTO(culto);
+            novoCulto.setVagas(culto.getCapacidade());
+            novoCulto = cultoRepositoryDTO.save(novoCulto);
+
+            return ResponseEntity.status(HttpStatus.CREATED).body(novoCulto);
         } else {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }
@@ -43,8 +50,9 @@ public class CultoController {
     }
 
     @GetMapping("/cultos/{idInstituicao}")
-    public List<CultoModel> getCultoByIdInstituicao(@PathVariable String idInstituicao) {
-        return cultoRepository.findByIdInstituicao(idInstituicao);
+    public ResponseEntity<List<CultoDTO>> getCultoByIdInstituicao(@PathVariable String idInstituicao) {
+        List<CultoDTO> dbCultos = cultoRepositoryDTO.findByIdInstituicao(idInstituicao);
+        return ResponseEntity.status(HttpStatus.OK).body(dbCultos);
     }
 
     @PatchMapping("/culto/{idCulto}")

@@ -13,4 +13,5 @@ public interface AgendamentoRepository extends MongoRepository<AgendamentoModel,
     List<AgendamentoModel> findByIdPessoa(String idPessoa);
     List<AgendamentoModel> findByIdCulto(String idCulto);
     AgendamentoModel findByIdCultoAndIdPessoa(String idCulto, String idPessoa);
+    Integer countByIdCulto(String idCulto);
 }

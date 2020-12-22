@@ -2,7 +2,6 @@ package br.com.fiap.api.repository;
 
 import br.com.fiap.api.model.CultoModel;
 import org.springframework.data.mongodb.repository.MongoRepository;
-import org.springframework.http.ResponseEntity;
 
 import java.util.Date;
 import java.util.List;
