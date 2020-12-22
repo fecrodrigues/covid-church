@@ -11,7 +11,14 @@ A persistência dos dados está sendo feita em um banco de dados MongoDB Atlas.
 
 ## Frontend (pasta Frontend)
 
+O Frontend pode ser inicializado localmente, porém também está publicado na URL: http://cchurch.creativedevmind.com.br/
+Para subir localmente, executar os passos abaixo:
 
+1) dentro da pasta Frontend rodar o comando "npm install";
+2) rodar o comando "npm install -g @angular/cli";
+3) rodar o comando "npm start".
+
+OBS: É mandatório possuir o node e o npm instalados na máquina.
 
 ## Backend (pasta Backend)
 
