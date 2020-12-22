@@ -16,14 +16,14 @@
       <td mat-cell *matCellDef="let element"> {{element.idPessoa}} </td>
     </ng-container>
 
-    <ng-container matColumnDef="nomeCulto">
+    <ng-container matColumnDef="descricao">
       <th mat-header-cell *matHeaderCellDef> Nome do Culto </th>
-      <td mat-cell *matCellDef="let element"> {{element.nomeCulto}} </td>
+      <td mat-cell *matCellDef="let element"> {{element.descricao}} </td>
     </ng-container>
 
-    <ng-container matColumnDef="dataCulto">
+    <ng-container matColumnDef="data">
       <th mat-header-cell *matHeaderCellDef> Data do Culto </th>
-      <td mat-cell *matCellDef="let element"> {{formatarDataParaExibicao(element.dataCulto)}} </td>
+      <td mat-cell *matCellDef="let element"> {{formatarDataParaExibicao(element.data)}} </td>
     </ng-container>
 
     <!-- Name Column -->
