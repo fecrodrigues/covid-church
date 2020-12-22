@@ -11,7 +11,14 @@ A persistência dos dados está sendo feita em um banco de dados MongoDB Atlas.
 
 ## Frontend (pasta Frontend)
 
+O Frontend pode ser inicializado localmente, porém também está publicado na URL: http://cchurch.creativedevmind.com.br/
+Para subir localmente, executar os passos abaixo:
 
+1) dentro da pasta Frontend rodar o comando "npm install";
+2) rodar o comando "npm install -g @angular/cli";
+3) rodar o comando "npm start".
+
+OBS: É mandatório possuir o node e o npm instalados na máquina.
 
 ## Backend (pasta Backend)
 
@@ -28,3 +35,5 @@ springfox.documentation.swagger-ui.enabled: Habilita a documentação do Swagger
 
 ### Documentação
 As informações referentes as rotas e funcionalidades do microsserviço podem ser acessadas através do swagger(http://localhost:3001/swagger-ui.html) configurado no projeto. Você pode fazer o download no link docs e importar no Postman ou no seu consumidor de APIs preferido :)
+
+O projeto foi publicado no Heroku e o Swagger também pode ser acessado através da URL: https://hidden-dawn-03766.herokuapp.com/swagger-ui/
