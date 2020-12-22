@@ -56,6 +56,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.authorizeRequests()
                 .antMatchers("/usuarios/**").permitAll()
                 .antMatchers(String.valueOf(HttpMethod.OPTIONS),"**").permitAll()
+                .antMatchers(org.springframework.http.HttpMethod.POST,"/pessoa").permitAll()
 //                .antMatchers(HttpMethod.POST, "/products").hasRole("ADMIN")
                 .anyRequest().authenticated()
                     .and()

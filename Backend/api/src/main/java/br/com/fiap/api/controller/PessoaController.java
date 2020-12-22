@@ -38,6 +38,7 @@ public class PessoaController {
         if (dbPessoa == null) {
         	pessoa.setPassword(passwordEncoder.encode(pessoa.getPassword()));
             pessoaModel = pessoaRepository.save(pessoa);
+            pessoaModel.setPassword(null);
             return ResponseEntity.status(HttpStatus.CREATED).body(pessoaModel);
         } else {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();

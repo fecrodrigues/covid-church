@@ -1,6 +1,5 @@
 package br.com.fiap.api.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.stereotype.Repository;
@@ -17,7 +16,6 @@ public class PessoaModel {
     private Date dataNascimento;
     private Integer idade;
     private String userName;
-    @JsonIgnore
     private String password;
 
     public PessoaModel(String cpf, String nome, String sobrenome, Date dataNascimento, Integer idade, String userName, String password) {
