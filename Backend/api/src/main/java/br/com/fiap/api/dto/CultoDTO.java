@@ -1,11 +1,17 @@
 package br.com.fiap.api.dto;
 
 import br.com.fiap.api.model.CultoModel;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.stereotype.Repository;
 
 import java.util.Date;
 
+@Repository
+@Document(collection = "Culto")
 public class CultoDTO {
 
+    @Id
     private String id;
     private String idInstituicao;
     private String descricao;

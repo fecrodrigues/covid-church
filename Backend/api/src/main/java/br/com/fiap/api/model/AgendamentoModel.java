@@ -1,11 +1,8 @@
 package br.com.fiap.api.model;
 
-import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.stereotype.Repository;
-
-import java.time.LocalDateTime;
 import java.util.Date;
 
 @Repository

@@ -23,9 +23,6 @@ public class PessoaController {
     @Autowired
     private PessoaRepository pessoaRepository;
 
-//    @Autowired
-//    PasswordEncoder passwordEncoder;
-
     @RequestMapping(value = "/")
     public void redirect(HttpServletResponse response) throws IOException {
         response.sendRedirect("/swagger-ui.html");
@@ -41,24 +38,6 @@ public class PessoaController {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }
     }
-
-
-/*    @PostMapping("/pessoa")
-    public ResponseEntity<PessoaModel> addPessoa(@RequestBody PessoaModel pessoa) {
-        PessoaModel newPessoa = new PessoaModel();
-        newPessoa.setCpf(pessoa.getCpf());
-        newPessoa.setNome(pessoa.getNome());
-        newPessoa.setSobrenome(pessoa.getSobrenome());
-        newPessoa.setDataNascimento(pessoa.getDataNascimento());
-        newPessoa.setIdade(pessoa.getIdade());
-        newPessoa.setPassword(passwordEncoder.encode(pessoa.getPassword()));
-
-        pessoaModel = pessoaRepository.save(newPessoa);
-        if (pessoaModel != null)
-            return ResponseEntity.status(HttpStatus.CREATED).body(newPessoa);
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
-
-    }*/
 
     @GetMapping("/pessoas")
     public List<PessoaModel> getPessoas(){ return pessoaRepository.findAll(); }

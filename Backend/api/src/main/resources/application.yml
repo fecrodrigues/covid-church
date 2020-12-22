@@ -7,7 +7,7 @@ spring:
   data: 
     mongodb: 
       database: Church
-      uri: "mongodb+srv://covid-church_devuser:eWfjNw09Pf69lEj6@cluster0.vvh2x.mongodb.net/<dbname>?retryWrites=true&w=majority"
+      uri: 
 springfox: 
   documentation: 
     swagger-ui: 
