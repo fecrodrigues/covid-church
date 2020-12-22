@@ -31,10 +31,10 @@ export class LoginComponent implements OnInit {
 
     if (this.form.valid) {
 
-      localStorage.setItem('token', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJjcGYiOiIxMjM0NTY3ODkxMiJ9.Nckx1yQvv6fbNOPiZKNljKEJX5IPAEmVU_bzErHNBIw');
-      this.router.navigate([''])
+      /*localStorage.setItem('token', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJjcGYiOiIxMjM0NTY3ODkxMiJ9.Nckx1yQvv6fbNOPiZKNljKEJX5IPAEmVU_bzErHNBIw');
+      this.router.navigate([''])*/
 
-      /*this.apiCaller.efetuarLogin(this.form.getRawValue()).subscribe(
+      this.apiCaller.efetuarLogin(this.form.getRawValue()).subscribe(
         response => {
           localStorage.setItem('token', (<any>response).token);
           this.router.navigate([''])
@@ -46,7 +46,7 @@ export class LoginComponent implements OnInit {
             'error'
           )
         }
-      )*/
+      )
     }
   }
   
