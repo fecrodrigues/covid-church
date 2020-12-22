@@ -72,7 +72,7 @@ export class ApiCallerService {
   }
 
   carregarListadeCultosPorInstituicao(idInstituicao: String): Observable<any> {
-    return this.httpClient.get(this.baseUrl + '/cultos/' + idInstituicao, { headers: { Authorization: 'Bearer ' + this.token } });
+    return this.httpClient.get(this.baseUrl + '/cultos/instituicoes/' + idInstituicao, { headers: { Authorization: 'Bearer ' + this.token } });
   }
 
   inserirCulto(idInstituicao: String, infoCulto: any) {
