@@ -9,9 +9,8 @@ A persistência dos dados está sendo feita em um banco de dados MongoDB Atlas.
 
 ## Justificativas da composição do projeto
 
-
-
 ## Frontend (pasta Frontend)
+
 
 
 ## Backend (pasta Backend)
