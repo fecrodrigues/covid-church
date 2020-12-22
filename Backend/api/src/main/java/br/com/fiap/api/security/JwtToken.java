@@ -22,8 +22,9 @@ public class JwtToken {
 	@Value("${jwt.expire}")
 	private int expire;
 	
-    public String generateToken(String username){
+    public String generateToken(String username, String cpf){
         Map<String, Object> claims = new HashMap<>();
+        claims.put("cpf", cpf);
         Date dataCriacao = getFromLocalDateTime(LocalDateTime.now());
         Date dataExpiracao = getFromLocalDateTime(LocalDateTime.now().plusMinutes(expire));
         return Jwts.builder()

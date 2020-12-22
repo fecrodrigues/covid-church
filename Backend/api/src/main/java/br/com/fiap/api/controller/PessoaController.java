@@ -7,6 +7,7 @@ import br.com.fiap.api.utils.JsonNullableUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -22,6 +23,9 @@ public class PessoaController {
 
     @Autowired
     private PessoaRepository pessoaRepository;
+    
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     @RequestMapping(value = "/")
     public void redirect(HttpServletResponse response) throws IOException {
@@ -32,6 +36,7 @@ public class PessoaController {
     public ResponseEntity<PessoaModel> addPessoa(@RequestBody PessoaModel pessoa) {
         PessoaModel dbPessoa = pessoaRepository.findByCpf(pessoa.getCpf());
         if (dbPessoa == null) {
+        	pessoa.setPassword(passwordEncoder.encode(pessoa.getPassword()));
             pessoaModel = pessoaRepository.save(pessoa);
             return ResponseEntity.status(HttpStatus.CREATED).body(pessoaModel);
         } else {

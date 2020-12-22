@@ -56,7 +56,9 @@ public class UsuarioService {
         } catch (BadCredentialsException badCredentialsException){
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "credenciais.invalidas");
         }
-        String token = jwtTokenUtil.generateToken(authDTO.getUserName());
+        Usuario usuario = userRepository.findFirstByUserName(authDTO.getUserName());
+        
+        String token = jwtTokenUtil.generateToken(authDTO.getUserName(), usuario.getCpf());
 
         JwtDTO tokenDTO = new JwtDTO();
         tokenDTO.setToken(token);
