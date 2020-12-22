@@ -41,34 +41,34 @@ export class ApiCallerService {
   }
 
   carregarListaInstituicoesUsuario(): Observable<any> {
-    return this.httpClient.get(this.baseUrl + '/instituicoes/usuario/' + this.cpf, { headers: { Authorization: 'Bearer ' + this.token } });
+    return this.httpClient.get(this.baseUrl + '/instituicoes/usuarios/' + this.cpf, { headers: { Authorization: 'Bearer ' + this.token } });
   }
 
   cadastrarUsuario(infoUsuario: any): Observable<any> {
-    return this.httpClient.post(this.baseUrl + '/pessoa', infoUsuario);
+    return this.httpClient.post(this.baseUrl + '/pessoas', infoUsuario);
   }
 
   editarUsuario(novaInfoUsuario: any): Observable<any> {
-    return this.httpClient.patch(this.baseUrl + '/pessoa/' + this.cpf, novaInfoUsuario, { headers: { Authorization: 'Bearer ' + this.token } });
+    return this.httpClient.patch(this.baseUrl + '/pessoas/' + this.cpf, novaInfoUsuario, { headers: { Authorization: 'Bearer ' + this.token } });
   }
 
   carregarUsuario(): Observable<any> {
-    return this.httpClient.get(this.baseUrl + '/pessoa/' + this.cpf, { headers: { Authorization: 'Bearer ' + this.token } });
+    return this.httpClient.get(this.baseUrl + '/pessoas/' + this.cpf, { headers: { Authorization: 'Bearer ' + this.token } });
   }
 
   inserirInstituicao(infoInstituicao: any): Observable<any> {
     infoInstituicao.idUsuario = this.cpf;
-    return this.httpClient.post(this.baseUrl + '/instituicao', infoInstituicao, { headers: { Authorization: 'Bearer ' + this.token } });
+    return this.httpClient.post(this.baseUrl + '/instituicoes', infoInstituicao, { headers: { Authorization: 'Bearer ' + this.token } });
   }
 
   excluirInstituicao(idInstituicao: String): Observable<any> {
-    return this.httpClient.delete(this.baseUrl + '/instituicao/' + idInstituicao, { headers: { Authorization: 'Bearer ' + this.token } });
+    return this.httpClient.delete(this.baseUrl + '/instituicoes/' + idInstituicao, { headers: { Authorization: 'Bearer ' + this.token } });
   }
 
   atualizarInstituicao(idInstituicao: String, novaInfoInstituicao: any): Observable<any> {
     novaInfoInstituicao.idUsuario = this.cpf;
     delete novaInfoInstituicao.id;
-    return this.httpClient.patch(this.baseUrl + '/instituicao/' + idInstituicao, novaInfoInstituicao, { headers: { Authorization: 'Bearer ' + this.token } });
+    return this.httpClient.patch(this.baseUrl + '/instituicoes/' + idInstituicao, novaInfoInstituicao, { headers: { Authorization: 'Bearer ' + this.token } });
   }
 
   carregarListadeCultosPorInstituicao(idInstituicao: String): Observable<any> {
@@ -76,28 +76,28 @@ export class ApiCallerService {
   }
 
   inserirCulto(idInstituicao: String, infoCulto: any) {
-    return this.httpClient.post(this.baseUrl + '/culto', infoCulto, { headers: { Authorization: 'Bearer ' + this.token } });
+    return this.httpClient.post(this.baseUrl + '/cultos', infoCulto, { headers: { Authorization: 'Bearer ' + this.token } });
   }
 
   editarCulto(idCulto: String, infoAtualizadaCulto: any) {
-    return this.httpClient.patch(this.baseUrl + '/culto/' + idCulto, infoAtualizadaCulto, { headers: { Authorization: 'Bearer ' + this.token } });
+    return this.httpClient.patch(this.baseUrl + '/cultos/' + idCulto, infoAtualizadaCulto, { headers: { Authorization: 'Bearer ' + this.token } });
   }
 
   excluirCulto(idCulto: String): Observable<any> {
-    return this.httpClient.delete(this.baseUrl + '/culto/' + idCulto, { headers: { Authorization: 'Bearer ' + this.token } });
+    return this.httpClient.delete(this.baseUrl + '/cultos/' + idCulto, { headers: { Authorization: 'Bearer ' + this.token } });
   }
 
   inserirAgendamento(infoAgendamento: any) {
     infoAgendamento.idPessoa = this.cpf;
-    return this.httpClient.post(this.baseUrl + '/agendamento', infoAgendamento, { headers: { Authorization: 'Bearer ' + this.token } });
+    return this.httpClient.post(this.baseUrl + '/agendamentos', infoAgendamento, { headers: { Authorization: 'Bearer ' + this.token } });
   }
 
   carregarListadeAgendamentosPorUsuario(): Observable<any> {
-    return this.httpClient.get(this.baseUrl + '/agendamentos/usuario/' + this.cpf, { headers: { Authorization: 'Bearer ' + this.token } });
+    return this.httpClient.get(this.baseUrl + '/agendamentos/usuarios/' + this.cpf, { headers: { Authorization: 'Bearer ' + this.token } });
   }
 
   excluirAgendamento(idCulto: String): Observable<any> {
-    return this.httpClient.delete(this.baseUrl + '/agendamento/culto/' + idCulto + '/usuario/' + this.cpf, { headers: { Authorization: 'Bearer ' + this.token } });
+    return this.httpClient.delete(this.baseUrl + '/agendamentos/cultos/' + idCulto + '/usuarios/' + this.cpf, { headers: { Authorization: 'Bearer ' + this.token } });
   }
 
 }
