@@ -1,5 +1,6 @@
 package br.com.fiap.api.configuration;
 
+import io.swagger.models.HttpMethod;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -54,6 +55,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
                 .antMatchers("/usuarios/**").permitAll()
+                .antMatchers(String.valueOf(HttpMethod.OPTIONS),"**").permitAll()
 //                .antMatchers(HttpMethod.POST, "/products").hasRole("ADMIN")
                 .anyRequest().authenticated()
                     .and()
