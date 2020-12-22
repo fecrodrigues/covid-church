@@ -41,7 +41,7 @@ public class AgendamentoController {
     @Autowired
     private CultoRepositoryDTO cultoRepositoryDTO;
 
-    @PostMapping("/agendamento")
+    @PostMapping("/agendamentos")
     public ResponseEntity<AgendamentoDTO> addAgendamento(@RequestBody AgendamentoModel agendamento){
 
         List<AgendamentoModel> dbAgendamento = agendamentoRepository.findByIdPessoa(agendamento.getIdPessoa());
@@ -59,7 +59,6 @@ public class AgendamentoController {
             cultoRepositoryDTO.save(testeCulto);
 
             return ResponseEntity.status(HttpStatus.CREATED).body(agendamentoDTO);
-//            return ResponseEntity.status(HttpStatus.CREATED).body(testeCulto);
         } else {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }
@@ -73,12 +72,12 @@ public class AgendamentoController {
         return agendamentoRepository.findByIdCulto(idCulto);
     }
 
-    @GetMapping("/agendamentos/usuario/{idUsuario}")
+    @GetMapping("/agendamentos/usuarios/{idUsuario}")
     public List<AgendamentoDTO> getAgendamentoByIdPessoa(@PathVariable String idUsuario) {
         return agendamentoRepositoryDTO.findByIdPessoa(idUsuario);
     }
 
-    @GetMapping("/agendamentos/{idCulto}/count")
+    @GetMapping("/agendamentos/{idCulto}/counts")
     public ResponseEntity<AgendamentoCountDTO> getCount(@PathVariable String idCulto) {
         List<AgendamentoModel> dbAgendamentos = agendamentoRepository.findByIdCulto(idCulto);
         Integer count = dbAgendamentos.size();
@@ -88,7 +87,7 @@ public class AgendamentoController {
         return ResponseEntity.status(HttpStatus.OK).body(countReturn);
     }
 
-    @DeleteMapping("/agendamento/culto/{idCulto}/usuario/{idUsuario}")
+    @DeleteMapping("/agendamentos/cultos/{idCulto}/usuarios/{idUsuario}")
     public ResponseEntity<Void> delAgendamento(@PathVariable("idCulto") String idCulto, @PathVariable("idUsuario") String idUsuario) {
     AgendamentoModel dbAgendamento = agendamentoRepository.findByIdCultoAndIdPessoa(idCulto, idUsuario);
 

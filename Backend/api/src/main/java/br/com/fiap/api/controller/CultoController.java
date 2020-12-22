@@ -29,7 +29,7 @@ public class CultoController {
     @Autowired
     private InstituicaoRepository instituicaoRepository;
 
-    @PostMapping("/culto")
+    @PostMapping("/cultos")
     public ResponseEntity<CultoDTO> addCulto(@RequestBody CultoModel culto) {
         CultoModel dbCulto = cultoRepository.findByIdInstituicaoAndData(culto.getIdInstituicao(), culto.getData());
 
@@ -49,13 +49,13 @@ public class CultoController {
     public List<CultoModel> getCultos() { return cultoRepository.findAll();
     }
 
-    @GetMapping("/cultos/{idInstituicao}")
+    @GetMapping("/cultos/instituicoes/{idInstituicao}")
     public ResponseEntity<List<CultoDTO>> getCultoByIdInstituicao(@PathVariable String idInstituicao) {
         List<CultoDTO> dbCultos = cultoRepositoryDTO.findByIdInstituicao(idInstituicao);
         return ResponseEntity.status(HttpStatus.OK).body(dbCultos);
     }
 
-    @PatchMapping("/culto/{idCulto}")
+    @PatchMapping("/cultos/{idCulto}")
     public ResponseEntity<Void> pathCulto(@PathVariable String idCulto, @RequestBody CultoPartialUpdateDTO cultoPartialUpdateDTO) {
         Optional<CultoModel> dbCultoModel = cultoRepository.findById(idCulto);
         if (dbCultoModel == null) {
@@ -74,7 +74,7 @@ public class CultoController {
 
     }
 
-    @DeleteMapping("/culto/{idCulto}")
+    @DeleteMapping("/cultos/{idCulto}")
     public ResponseEntity<Void> delCulto(@PathVariable String idCulto) {
         Optional<CultoModel> dbCulto = cultoRepository.findById(idCulto);
 

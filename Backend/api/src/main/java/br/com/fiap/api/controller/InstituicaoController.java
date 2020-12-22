@@ -26,7 +26,7 @@ public class InstituicaoController {
     @Autowired
     private PessoaRepository pessoaRepository;
 
-    @PostMapping("/instituicao")
+    @PostMapping("/instituicoes")
     public ResponseEntity<InstituicaoModel> addInstituicao(@RequestBody InstituicaoModel instituicao) {
         PessoaModel pessoa = pessoaRepository.findByCpf(instituicao.getIdUsuario());
         if (pessoa != null && instituicaoModel != null) {
@@ -40,12 +40,12 @@ public class InstituicaoController {
     @GetMapping("/instituicoes")
     public List<InstituicaoModel> getInstituicoes(){ return instituicaoRepository.findAll(); }
 
-    @GetMapping("/instituicoes/usuario/{idUsuario}")
+    @GetMapping("/instituicoes/usuarios/{idUsuario}")
     public List<InstituicaoModel> getInstituicaoByIdUsuario(@PathVariable String idUsuario) {
         return instituicaoRepository.findByIdUsuario(idUsuario);
     }
 
-    @PatchMapping("/instituicao/{id}")
+    @PatchMapping("/instituicoes/{id}")
     public ResponseEntity<Void> pathInstituicao(@PathVariable String id, @RequestBody InstituicaoPartialUpdateDTO instituicaoPartialUpdateDTO) {
         Optional<InstituicaoModel> dbInstituicaoModel = instituicaoRepository.findById(id);
         if (!dbInstituicaoModel.isPresent()) {
@@ -63,7 +63,7 @@ public class InstituicaoController {
 
     }
 
-    @DeleteMapping("/instituicao/{id}")
+    @DeleteMapping("/instituicoes/{id}")
     public ResponseEntity<Void> delInstituicao(@PathVariable String id){
         Optional<InstituicaoModel> instituicao = instituicaoRepository.findById(id);
         if (instituicao.isPresent()) {
@@ -75,7 +75,7 @@ public class InstituicaoController {
     }
 
 
-    @DeleteMapping("/instituicoes/usuario/{idUsuario}")
+    @DeleteMapping("/instituicoes/usuarios/{idUsuario}")
     public ResponseEntity<Void> delInstituicoes(@PathVariable String idUsuario){
         PessoaModel pessoa = pessoaRepository.findByCpf(idUsuario);
         if (pessoa != null) {
