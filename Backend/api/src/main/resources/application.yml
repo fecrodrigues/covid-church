@@ -1,7 +1,14 @@
-server:
+jwt: 
+  expire: 5
+  secret: fiapSecr3t
+server: 
   port: 3001
-spring:
-  data:
-    mongodb:
-      uri: mongodb+srv://covid-church_devuser:eWfjNw09Pf69lEj6@cluster0.vvh2x.mongodb.net/<dbname>?retryWrites=true&w=majority
+spring: 
+  data: 
+    mongodb: 
       database: Church
+      uri: "mongodb+srv://covid-church_devuser:eWfjNw09Pf69lEj6@cluster0.vvh2x.mongodb.net/<dbname>?retryWrites=true&w=majority"
+springfox: 
+  documentation: 
+    swagger-ui: 
+      enabled: true
