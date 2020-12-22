@@ -37,7 +37,7 @@ export class ApiCallerService {
   }
 
   carregarListaInstituicoes(): Observable<any> {
-    return this.httpClient.get(this.baseUrl + '/instituicoes', {  headers: new HttpHeaders({ "Authorization": `Bearer ${this.token}`}) });
+    return this.httpClient.get(this.baseUrl + '/instituicoes', {  headers: new HttpHeaders({ "Authorization": 'Bearer ' + this.token}) });
   }
 
   carregarListaInstituicoesUsuario(): Observable<any> {
