@@ -28,3 +28,5 @@ springfox.documentation.swagger-ui.enabled: Habilita a documentação do Swagger
 
 ### Documentação
 As informações referentes as rotas e funcionalidades do microsserviço podem ser acessadas através do swagger(http://localhost:3001/swagger-ui.html) configurado no projeto. Você pode fazer o download no link docs e importar no Postman ou no seu consumidor de APIs preferido :)
+
+O projeto foi publicado no Heroku e o Swagger também pode ser acessado através da URL: https://hidden-dawn-03766.herokuapp.com/swagger-ui/
